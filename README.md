@@ -9,6 +9,8 @@
 
 ## Current setup
 
+All setup path is in : `/apps/kir/eb/skylake/`
+
 ```bash
 
 sudo -u kir-software -s 
