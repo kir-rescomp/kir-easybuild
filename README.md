@@ -30,3 +30,28 @@ ebskl -S <search_term>
 
 ebskl -r --parallel=4 easyconfig.eb
 ```
+
+```bash
+# An example of replacing toolset in, for example, Judy-1.0.5-GCCcore-9.3.0.eb easyconfig: 
+
+# Rename the file Judy-1.0.5-GCCcore-9.3.0.eb into Judy-1.0.5-GCCcore-12.2.0.eb 
+
+# Open the Judy-1.0.5-GCCcore-12.2.0.eb and edit the toolset setting into: 
+
+toolchain = {'name': 'GCCcore', 'version': '12.2.0'} 
+
+# Change the dependencies versions into corresponding dependencies for 12.2.0 toolset: 
+
+
+builddependencies = [ 
+
+    ('Autotools', '20220317'), 
+
+    ('binutils', '2.39'), 
+
+] 
+
+# Save the file and run: 
+
+ebskl -r --parallel=4 Judy-1.0.5-GCCcore-12.2.0.eb 
+```
