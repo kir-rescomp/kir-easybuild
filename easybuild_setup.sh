@@ -44,8 +44,8 @@ if [[ ${USER:=$(whoami)} == "kir-software" ]];then
   export EASYBUILD_INSTALLPATH_MODULES="/apps/kir/eb/${sysname}/modules"
   export EASYBUILD_PACKAGEPATH="${EASYBUILD_PREFIX}/packages"
 else
-  export EASYBUILD_PREFIX="/agr/scratch/projects/2023-nesi_slurm_testing/${USER}/easybuildinstall/$sysname"
-  export EASYBUILD_INSTALLPATH_MODULES="/agr/scratch/projects/2023-nesi_slurm_testing/${USER}/easybuildinstall/$sysname/modules"
+  export EASYBUILD_PREFIX="/well/sansom/users/mat611/devel/easybuild/eb/${sysname}"
+  export EASYBUILD_INSTALLPATH_MODULES="/well/sansom/users/mat611/devel/easybuild/eb/${sysname}/modules"
   export EASYBUILD_SOURCEPATH=${EASYBUILD_PREFIX}:${EASYBUILD_SOURCEPATH} #Prepend writable path to srcpath
   mkdir -p "${EASYBUILD_INSTALLPATH_MODULES}"
 
