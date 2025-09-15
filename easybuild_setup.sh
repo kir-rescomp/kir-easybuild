@@ -18,7 +18,7 @@ fi
 
 # General Setting
 
-export export EASYBUILD_CUDA_COMPUTE_CAPABILITIES="8.0.61"
+export EASYBUILD_CUDA_COMPUTE_CAPABILITIES="8.0,9.0"
 export EASYBUILD_TMPDIR="${TMPDIR:=/tmp}"
 export EASYBUILD_ROBOT_PATHS="/apps/kir/eb/skylake/ebfiles_repo" ## Examine our installed software rather than the easyconfig repo. Threfore, it should be pointing to ebfiles_repo directory
 export EASYBUILD_SOURCEPATH="/apps/kir/eb/skylake/sources" #this should be shared by all architectures
