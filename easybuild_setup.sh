@@ -20,8 +20,8 @@ fi
 
 export export EASYBUILD_CUDA_COMPUTE_CAPABILITIES="8.0.61"
 export EASYBUILD_TMPDIR="${TMPDIR:=/tmp}"
-export EASYBUILD_ROBOT_PATHS="/gpfs3/apps/kir/eb/skylake/ebfiles_repo" ## Examine our installed software rather than the easyconfig repo. Threfore, it should be pointing to ebfiles_repo directory
-export EASYBUILD_SOURCEPATH="/gpfs3/apps/kir/eb/skylake/sources" #this should be shared by all architectures
+export EASYBUILD_ROBOT_PATHS="/apps/kir/eb/skylake/ebfiles_repo" ## Examine our installed software rather than the easyconfig repo. Threfore, it should be pointing to ebfiles_repo directory
+export EASYBUILD_SOURCEPATH="/apps/kir/eb/skylake/sources" #this should be shared by all architectures
 export EASYBUILD_USE_EXISTING_MODULES=1
 export EASYBUILD_ALLOW_LOADED_MODULES="EasyBuild"
 
@@ -38,10 +38,10 @@ export EASYBUILD_MODULES_TOOL="Lmod"
 # EASYBUILD_SOURCEPATH and EASYBUILD_INSTALLPATH unless these are overridden
 
 if [[ ${USER:=$(whoami)} == "kir-software" ]];then
-  export EASYBUILD_PREFIX="/agr/persist/apps/eri_${sysname}/easybuild-resources"
-  export EASYBUILD_INSTALLPATH="/agr/persist/apps/eri_${sysname}"
-  export EASYBUILD_INSTALLPATH_SOFTWARE="/agr/persist/apps/eri_${sysname}/software"
-  export EASYBUILD_INSTALLPATH_MODULES="/agr/persist/apps/eri_${sysname}/modules"
+  export EASYBUILD_PREFIX="/apps/kir/eb/${sysname}"
+  export EASYBUILD_INSTALLPATH="/apps/kir/eb/${sysname}"
+  export EASYBUILD_INSTALLPATH_SOFTWARE="/apps/kir/eb/${sysname}/software"
+  export EASYBUILD_INSTALLPATH_MODULES="/apps/kir/eb/${sysname}/modules"
   export EASYBUILD_PACKAGEPATH="${EASYBUILD_PREFIX}/packages"
 else
   export EASYBUILD_PREFIX="/agr/scratch/projects/2023-nesi_slurm_testing/${USER}/easybuildinstall/$sysname"
