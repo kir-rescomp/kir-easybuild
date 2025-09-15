@@ -46,7 +46,7 @@ if [[ ${USER:=$(whoami)} == "kir-software" ]];then
 else
   export EASYBUILD_PREFIX="/well/sansom/users/mat611/devel/easybuild/eb/${sysname}"
   export EASYBUILD_INSTALLPATH_MODULES="/well/sansom/users/mat611/devel/easybuild/eb/${sysname}/modules"
-  export EASYBUILD_SOURCEPATH=${EASYBUILD_PREFIX}:${EASYBUILD_SOURCEPATH} #Prepend writable path to srcpath
+  export EASYBUILD_SOURCEPATH="/well/sansom/users/mat611/devel/easybuild/eb/sources"  #Prepend writable path to srcpath
   mkdir -p "${EASYBUILD_INSTALLPATH_MODULES}"
 
   if [[ ":${MODULEPATH}:" != *":${EASYBUILD_INSTALLPATH_MODULES}:"* ]];then
