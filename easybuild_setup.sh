@@ -1,4 +1,4 @@
-# Set up easybuild environment for KIR staff builds
+#Set up easybuild environment for KIR staff builds
 # Should be used when as own user for testing and when building as kir-software
 
 #Parse args
