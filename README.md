@@ -14,4 +14,10 @@
 flowchart TD
     A["git clone https://github.com/kir-rescomp/kir-easybuild.git"] --> B["cd kir-easybuild && module load EasyBuild"]
     B --> C["source eb_init.sh"]
+    C --> D["eb kir-easybuild/easyconfigs/NAME.eb"]
+    
+    classDef navyStyle fill:#000080,stroke:#000080,color:#fff
+    class A,B,C,D navyStyle
 ```
+
+
