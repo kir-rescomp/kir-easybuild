@@ -1,7 +1,7 @@
 # EasyBuild at KRI 
 
 ## Overview
-- KIR Research Computing uses Easybuild to provide  SS packages to our researchers
+- KIR Research Computing uses Easybuild built environment modules. 
     - [EasyBuild](https://easybuild.io/)  is a software build and installation framework that allows you to manage (scientific) software on High Performance Computing (HPC) systems in an efficient way.
 - Researchers can load multiple versions of any software via Environment modules (LMOD)
 - All software is built to offer high reproducibility
@@ -21,3 +21,8 @@ flowchart TD
 ```
 
 
+* Once the build and tests were done as "you", 
+    - commit the .eb file to the repo
+    - login as admin `sudo -u kir-software -s`
+    - Change path to `/users/kir-software/kir-software/kir-easybuild`, make sure to `pull` any changes
+    - `source eb_init.sh`  - This will set the correct path for admin account ( similar to your accuont but on admin side of the file system)
