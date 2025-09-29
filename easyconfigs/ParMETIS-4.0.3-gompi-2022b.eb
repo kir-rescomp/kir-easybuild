@@ -1,0 +1,29 @@
+# By KB at KIR
+
+easyblock = 'CMakeMake'
+
+name = 'ParMETIS'
+version = '4.0.3'
+
+homepage = 'https://github.com/KarypisLab/ParMETIS'
+description = """ParMETIS is an MPI-based parallel library that implements a variety of algorithms for partitioning
+ unstructured graphs, meshes, and for computing fill-reducing orderings of sparse matrices. ParMETIS extends the
+ functionality provided by METIS and includes routines that are especially suited for parallel AMR computations and
+ large scale numerical simulations. The algorithms implemented in ParMETIS are based on the parallel multilevel k-way
+ graph-partitioning, adaptive repartitioning, and parallel multi-constrained partitioning schemes."""
+
+toolchain = {'name': 'gompi', 'version': '2022b'}
+toolchainopts = {'usempi': True, 'pic': True}
+
+sources = [SOURCELOWER_TAR_GZ]
+checksums = ['dc4981302819923f09362898ab0f06d92c5ae91fb9b61dda6e181099db7702bf']
+
+builddependencies = [('CMake', '3.24.3'),
+		  ('METIS','5.1.0'),
+		  ('GKlib','5.1.1'),
+]
+
+# Build static and shared libraries
+configopts = ['', '-DSHARED=1']
+
+moduleclass = 'math'

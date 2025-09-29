@@ -1,0 +1,29 @@
+# EasyBuild easyconfig
+# Author: Konstantin Borisenko
+# Kennedy Institute of Rheumatology, University of Oxford
+
+easyblock = 'Tarball'
+
+name = 'minimac4'
+version = '4.1.6'
+
+homepage = 'https://github.com/statgen/Minimac4'
+description = """ Minimac4 is a lower memory and more computationally efficient implementation of the genotype imputation algorithms in minimac/mininac2/minimac3."""
+
+sources = ['%(name)s-%(version)s.tar.gz']
+#checksums = ['']
+
+toolchain = SYSTEM
+
+# sanity checks
+
+sanity_check_paths = {
+     'files': ['bin/minimac4'],
+     'dirs': ['bin','share'] }
+
+sanity_check_commands = ['minimac4 -h']
+
+modextrapaths = {'PATH': ''}
+
+moduleclass = 'bio'
+

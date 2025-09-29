@@ -1,0 +1,34 @@
+# EasyBuild easyconfig
+# Author: Konstantin Borisenko
+# Kennedy Institute of Rheumatology, University of Oxford
+
+easyblock = 'CMakeMake'
+
+name = 'CastXML'
+version = '0.4.3'
+
+homepage = 'https://github.com/CastXML/CastXML'
+description = """CastXML is a C-family abstract syntax tree XML output tool."""
+
+toolchain = {'name': 'foss', 'version': '2020a'}
+
+source_urls = ['https://github.com/CastXML/CastXML/archive/refs/tags/']
+sources = ['v%(version)s.tar.gz']
+checksums = ['3dd94096e07ffe103b2a951e4ff0f9486cc615b3ef08e95e5778eaaec667fb65']
+
+builddependencies = [('CMake', '3.16.4')]
+
+dependencies = [
+    ('Clang', '9.0.1'),
+    ('ncurses', '6.2'),
+    ('zlib', '1.2.11'),
+]
+
+separate_build_dir = True
+
+sanity_check_paths = {
+    'files': ['bin/castxml'],
+    'dirs': ['share/castxml'],
+}
+
+moduleclass = 'tools'

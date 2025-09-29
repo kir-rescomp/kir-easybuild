@@ -1,0 +1,32 @@
+# EasyBuild easyconfig
+# Author: Konstantin Borisenko
+# Kennedy Institute of Rheumatology, University of Oxford
+
+easyblock = 'Tarball'
+
+name = 'Baysor'
+version = '0.7.0'
+
+homepage = 'https://github.com/kharchenkolab/Baysor'
+description = "Baysor is a tool for performing cell segmentation on imaging-based spatial transcriptomics data. It optimizes segmentation considering the likelihood of transcriptional composition, size and shape of the cell."
+
+toolchain = SYSTEM
+
+source_urls = ['https://github.com/kharchenkolab/Baysor/releases/download/v%(version)s/']
+sources = ['%(namelower)s-x86_x64-linux-v%(version)s_build.zip']
+checksums = ['d74d363bcba1025812d86db7b247aab0eeda77b73a8c5e53bd19b338c72f71c9']
+
+postinstallcmds = ['mv %(installdir)s/bin %(installdir)s/tmp', 'mv %(installdir)s/tmp/%(namelower)s/*  %(installdir)s', 'rm -rf %(installdir)s/tmp']
+
+# sanity checks
+
+sanity_check_paths = {
+     'files': ['bin/%(namelower)s'],
+     'dirs': ['bin'], }
+
+sanity_check_commands = ['%(namelower)s --help']
+
+modextrapaths = {'PATH': ''}
+
+moduleclass = 'bio'
+

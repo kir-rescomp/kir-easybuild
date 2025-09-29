@@ -1,0 +1,39 @@
+# EasyBuild easyconfig
+# Author: Konstantin Borisenko
+# Kennedy Institute of Rheumatology, University of Oxford
+
+easyblock = 'ConfigureMake'
+
+name = 'igphyml'
+version = '2.0.0'
+
+homepage = 'https://igphyml.readthedocs.io/en/latest/overview.html'
+description = """ IgPhyML is a phylogenetic inference package for B cell repertoires. It implements codon substitution models designed that incorporate unique features of somatic hypermutation and allow for parameter estimation across lineages to characterize entire repertoires. """
+
+sources = [{
+    'source_urls' : ['https://bitbucket.org/kleinstein/%(name)s/get/'],
+    'filename': '%(version)s.tar.gz',
+#    'extract_cmd': "tar -xzf %s",
+}]
+checksums = ['0ea9bfbc648999495e16aef5f769434f9a87404e4af4b82822c2c905ebd07cc7']
+
+preconfigopts = 'aclocal && autoheader && autoconf -f && automake -f --add-missing &&'
+
+toolchain = {'name': 'GCC', 'version': '12.2.0'}
+
+maxparallel = 1
+
+# blas only
+configopts=['--enable-blas']
+
+# sanity checks
+
+sanity_check_paths = {
+     'files': ['bin/igphyml'],
+     'dirs': ['bin'], }
+
+sanity_check_commands = ['igphyml -h']
+
+modextrapaths = {'PATH': ''}
+
+moduleclass = 'bio'

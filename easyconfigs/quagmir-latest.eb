@@ -1,0 +1,31 @@
+# EasyBuild easyconfig
+# Author: Konstantin Borisenko
+# Kennedy Institute of Rheumatology, University of Oxford
+
+easyblock = 'Conda'
+
+name = 'quagmir'
+version = 'latest'
+
+homepage = 'https://github.com/Gu-Lab-RBL-NCI/QuagmiR'
+description = """ QuagmiR is a tool to analyze isomiRs (MicroRNA isoforms) from next generation sequencing data using a novel and flexible searching algorithm designated for the detection and annotation of isomiRs of heterogeneous nature. """
+
+toolchain = SYSTEM
+
+requirements = "%(name)s=%(version)s"
+channels = ['bioconda', 'conda-forge']
+
+builddependencies = [('Miniconda3', '23.1.0-1')]
+
+# sanity checks
+
+sanity_check_paths = {
+     'files': ["bin/alevin-fry"],
+     'dirs': [] }
+
+sanity_check_commands = ['alevin-fry -h','alevin-fry -V']
+
+modextrapaths = {'PATH': ''}
+
+moduleclass = 'bio'
+

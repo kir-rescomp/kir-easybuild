@@ -1,0 +1,30 @@
+# cellbender
+easyblock = 'PythonBundle'
+
+name = 'cellbender'
+version = '0.3.1'
+versionsuffix = '-Python-%(pyver)s'
+
+homepage = 'https://github.com/broadinstitute/CellBender'
+
+description = """CellBender is a software package for eliminating technical artifacts from high-throughput single-cell RNA sequencing (scRNA-seq) data."""
+
+toolchain = {'name': 'foss', 'version': '2022b'}
+
+dependencies = {
+    ('Python', '3.10.8'),
+    ('SciPy-bundle', '2023.02'),
+    ('PyTorch', '1.13.1'),
+    ('matplotlib','3.7.0'),
+}
+
+exts_list = [
+    (name, version, {
+        'checksums': ['74daea599aa9ee578ea03e869989f5f40e6d6b44dd05130afb3d0f9815700a27'],
+    }),
+]
+
+use_pip = True
+use_pip_requirement = True
+download_dep_fail = True
+sanity_pip_check = True

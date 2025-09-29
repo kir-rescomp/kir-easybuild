@@ -1,0 +1,47 @@
+easyblock = 'Tarball'
+
+name = 'Gurobi'
+version = '11.0.0'
+
+homepage = 'https://www.gurobi.com'
+description = """The Gurobi Optimizer is a state-of-the-art solver for mathematical programming.
+The solvers in the Gurobi Optimizer were designed from the ground up to exploit modern
+architectures and multi-core processors, using the most advanced implementations of the
+latest algorithms."""
+
+toolchain = {'name': 'GCCcore', 'version': '12.2.0'}
+
+source_urls = ['https://packages.gurobi.com/%(version_major_minor)s/']
+sources = ['%(namelower)s%(version)s_linux64.tar.gz']
+checksums = [
+    {'gurobi11.0.0_linux64.tar.gz': '6a1ec7499b230aea0542bc893bf0642ae8ce983dd5ef0c37cb3a253d827ce634'},
+]
+
+# Patch manually - using the information in patch file
+
+builddependencies = [
+    ('binutils', '2.39'),
+]
+
+dependencies = [
+    ('Python', '3.10.8'),
+]
+
+# remove bundled Python interpreter in favour of the dependency in EB
+postinstallcmds = ['rm %(installdir)s/bin/python*']
+
+# 
+
+# license is mandatory for installation
+# use EB_GUROBI_LICENSE_FILE environment variable, or 
+# uncomment and modify the following variable:
+#license_file = '/apps/eb/licenses/gurobi.lic'
+
+modloadmsg = """Gurobi shell based on Python %(pyver)s can be launched with command `gurobi.sh`
+Gurobi Python Interface can be loaded in Python %(pyver)s with 'import gurobipy'
+"""
+
+modextravars = {'GUROBI_HOME': '%(installdir)s', 'GRB_LICENSE_FILE':'%(installdir)s/gurobi.lic'}
+modextrapaths = {'PYTHONPATH': 'lib/python3.11','MATLABPATH':'matlab'}
+
+moduleclass = 'math'

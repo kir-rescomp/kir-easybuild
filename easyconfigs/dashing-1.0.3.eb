@@ -1,0 +1,31 @@
+# EasyBuild easyconfig
+# Author: Konstantin Borisenko
+# Kennedy Institute of Rheumatology, University of Oxford
+
+easyblock = 'Tarball'
+
+name = 'dashing'
+version = '1.0.3'
+
+homepage = 'https://github.com/dnbaker/dashing'
+description = "dashing sketches and computes distances between fasta and fastq data."
+
+toolchain = SYSTEM
+
+source_urls = ['https://github.com/dnbaker/dashing-binaries/archive/refs/tags/']
+sources = ['v%(version)s.tar.gz']
+checksums = ['60706dff99daf8e3e42348f037a32bdc7e62e88f6a3ccbd10aee0fe8cd183116']
+
+postinstallcmds = ['gunzip %(installdir)s/linux/%(name)s_s512.gz','mv %(installdir)s/linux/%(name)s_s512 %(installdir)s/%(name)s','mv %(installdir)s/linux/%(name)s_s512.xz %(installdir)s/%(name)s_s512.xz','chmod ugo+x %(installdir)s/%(name)s']
+
+# sanity checks
+
+sanity_check_paths = {
+     'files': ['%(name)s'],
+     'dirs': [''], }
+
+#sanity_check_commands = ['%(name)s']
+
+modextrapaths = {'PATH': ''}
+
+moduleclass = 'bio'

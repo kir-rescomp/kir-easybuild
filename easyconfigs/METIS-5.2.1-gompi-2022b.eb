@@ -1,0 +1,33 @@
+# By KB at KIR
+
+easyblock='CMakeMake'
+
+name = 'METIS'
+version = '5.2.1'
+
+homepage = 'https://github.com/KarypisLab/METIS'
+
+description = """
+ METIS is a set of serial programs for partitioning graphs, partitioning
+ finite element meshes, and producing fill reducing orderings for sparse
+ matrices. The algorithms implemented in METIS are based on the multilevel
+ recursive-bisection, multilevel k-way, and multi-constraint partitioning
+ schemes.
+"""
+
+toolchain = {'name': 'gompi', 'version': '2022b'}
+toolchainopts = {'pic': True}
+
+source_urls = ['https://github.com/KarypisLab/METIS/archive/refs/tags']
+sources = ['v%(version)s.tar.gz']
+checksums = ['1a4665b2cd07edc2f734e30d7460afb19c1217c2547c2ac7bf6e1848d50aff7a']
+
+builddependencies = [
+    ('binutils', '2.39'),
+    ('CMake', '3.24.3'),
+    ('GKlib', '5.1.1'),
+]
+
+configopts = ['', 'shared=1']
+
+moduleclass = 'math'

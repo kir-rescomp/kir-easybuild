@@ -1,0 +1,29 @@
+# EasyBuild easyconfig
+# Author: Konstantin Borisenko
+# Kennedy Institute of Rheumatology, University of Oxford
+
+easyblock = 'Tarball'
+
+name = 'KGen'
+version = '0.8.2'
+
+homepage = 'https://github.com/NCAR/KGen'
+description = """ KGen is a Python tool that extracts partial codes out of a large Fortran application and converts them into a standalone/verifiable/executable kernel."""
+
+source_urls = ['https://github.com/NCar/%(name)s/archive/refs/tags']
+sources = ['%(namelower)s_v%(version)s.tar.gz']
+checksums = ['0371e95364fa9c8285d46ba8b3145f01d36cea8970a0c45807c5db1a8470330e']
+
+toolchain = {'name': 'foss', 'version': '2020a'}
+
+dependencies = [('Python','2.7.18')]
+
+# sanity checks
+
+sanity_check_paths = {
+     'files': ['bin/kgen'],
+     'dirs': ['base','bin','doc','examples','kgen'] }
+
+modextrapaths = {'PATH': ''}
+
+moduleclass = 'tools'

@@ -1,0 +1,37 @@
+# EasyBuild easyconfig
+# Author: Konstantin Borisenko
+# Kennedy Institute of Rheumatology, University of Oxford
+
+easyblock = 'MakeCp'
+
+name = 'idemp'
+version = 'latest'
+
+homepage = 'https://github.com/yhwu/idemp'
+description = """ Barcode demultiplex for Illumina I1, R1, R2 fastq.gz files. """
+
+sources = [{
+    'filename': '%(name)s-%(version)s.tar.gz',
+    'git_config': {
+        'url': 'https://github.com/yhwu',
+        'repo_name': 'idemp',
+        'tag': 'master',
+    },
+}]
+checksums = ['676003d3d086be96b3f814b439de1f14b66b3ce561f2989719b6662a33f36c64']
+
+toolchain = {'name': 'GCC', 'version': '9.3.0'}
+
+files_to_copy = ['idemp','I1.fastq','LICENSE','R1.fastq','R2.fastq','README.md','barcode_sample.txt','checkDecodedFiles.R']
+
+# sanity checks
+
+sanity_check_paths = {
+     'files': ['idemp'],
+     'dirs': [''], }
+
+sanity_check_commands = ['']
+
+modextrapaths = {'PATH': ''}
+
+moduleclass = 'bio'

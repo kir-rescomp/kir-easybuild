@@ -1,0 +1,32 @@
+# EasyBuild easyconfig
+# Author: Konstantin Borisenko
+# Kennedy Institute of Rheumatology, University of Oxford
+
+easyblock = 'PythonPackage'
+
+name = 'eggnog-mapper'
+version = '2.1.2'
+versionsuffix='-Python-%(pyver)s'
+
+homepage = 'http://eggnog-mapper.embl.de/'
+description = """ EggNOG-mapper is a tool for fast functional annotation of novel sequences. It uses precomputed Orthologous Groups (OGs) and phylogenies from the EggNOG database (http://eggnog5.embl.de) to transfer functional information from fine-grained orthologs only. """
+
+toolchain = {'name': 'foss', 'version': '2020a'}
+
+sources = [SOURCE_TAR_GZ]
+checksums = ['db82a556af5b5946dff21b7193770f0b7deab21c28b01b4e374775afb0d50c14']
+
+dependencies = [
+    ('Python','3.8.2'),
+    ('Biopython','1.76',versionsuffix),
+    ('psutil','5.7.0'),
+    ('SQLite','3.31.1')
+]
+
+use_pip = True
+download_dep_fail = True
+sanity_pip_check = True
+
+options = {'modulename': False}
+
+moduleclass = 'bio'

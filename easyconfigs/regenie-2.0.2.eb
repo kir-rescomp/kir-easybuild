@@ -1,0 +1,31 @@
+# EasyBuild easyconfig
+# Author: Konstantin Borisenko
+# Kennedy Institute of Rheumatology, University of Oxford
+
+easyblock = 'Tarball'
+
+name = 'regenie'
+version = '2.0.2'
+
+homepage = 'https://rgcgithub.github.io/regenie/'
+description = "regenie is a C++ program for whole genome regression modelling of large genome-wide association studies. It is developed and supported by a team of scientists at the Regeneron Genetics Center."
+
+toolchain = SYSTEM
+
+source_urls = ['https://github.com/rgcgithub/regenie/releases/download/v%(version)s/']
+sources = ['regenie_v%(version)s.gz_x86_64_Centos7_mkl.zip']
+checksums = ['b6bbf2fd70d290934abff81b3cc17090e9bf57f68a0fc83b63a46795ca193e48']
+
+postinstallcmds = ['mv %(installdir)s/%(name)s_v%(version)s.gz_x86_64_Centos7_mkl %(installdir)s/%(name)s']
+
+# sanity checks
+
+sanity_check_paths = {
+     'files': ['%(name)s'],
+     'dirs': [''], }
+
+sanity_check_commands = ['%(name)s --help']
+
+modextrapaths = {'PATH': ''}
+
+moduleclass = 'bio'

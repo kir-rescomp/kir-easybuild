@@ -1,0 +1,39 @@
+# Python-3.6.8-GCCcore-9.3.0-bare
+# by Konstantin Borisenko
+# Kennedy Institute of Rheumatology
+
+name = 'Python'
+version = '3.6.8'
+versionsuffix = '-bare'
+
+homepage = 'https://python.org/'
+description = """Python is a programming language that lets you work more quickly and integrate your systems
+ more effectively."""
+
+toolchain = {'name': 'GCCcore', 'version': '9.3.0'}
+toolchainopts = {'pic': True}
+
+source_urls = ['http://www.python.org/ftp/%(namelower)s/%(version)s/']
+sources = [SOURCE_TGZ]
+checksums = ['7f5b1f08b3b0a595387ef6c64c85b1b13b38abef0dd871835ee923262e4f32f0']
+
+builddependencies = [
+    ('UnZip', '6.0'),
+]
+
+dependencies = [
+    ('binutils', '2.34'),
+    ('bzip2', '1.0.8'),  # required for bz2 package in Python stdlib
+    ('zlib', '1.2.11'),
+    ('libreadline', '8.0'),
+    ('ncurses', '6.2'),
+    ('SQLite', '3.31.1'),
+    ('XZ', '5.2.5'),
+    ('libffi', '3.3'),
+    ('GMP', '6.2.0'), 
+    ('OpenSSL', '1.1.1e'),
+]
+
+install_pip = True
+
+moduleclass = 'lang'

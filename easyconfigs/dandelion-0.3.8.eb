@@ -1,0 +1,32 @@
+# EasyBuild easyconfig
+# Author: Konstantin Borisenko
+# Kennedy Institute of Rheumatology, University of Oxford
+
+easyblock = 'Tarball'
+
+name = 'dandelion'
+version = '0.3.8'
+
+homepage = 'https://sc-dandelion.readthedocs.io/en/latest/index.html'
+description = """ Singularity container package for analyzing single cell BCR/TCR data from 10x Genomics  solution! It streamlines the pre-processing, leveraging some tools from immcantation s
+uite, and integrates with scanpy/anndata for single-cell BCR/TCR analysis. It also includes a couple of functions for visualization. """
+
+sources = ['%(name)s-%(version)s.tar.gz']
+#checksums = ['']
+
+toolchain = SYSTEM
+
+# sanity checks
+
+sanity_check_paths = {
+     'files': ['dandelion.txt'],
+     'dirs': [] }
+
+#sanity_check_commands = ['']
+
+modextrapaths = {'PATH': ''}
+
+modextravars = {'DNDLN': '/well/kir/mirror/dandelion/sc-%(name)s_%(version)s.sif'}
+
+moduleclass = 'bio'
+

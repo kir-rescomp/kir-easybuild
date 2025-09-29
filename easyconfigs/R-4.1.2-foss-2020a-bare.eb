@@ -1,0 +1,83 @@
+name = 'R'
+version = '4.1.2'
+versionsuffix = '-bare'
+
+homepage = 'https://www.r-project.org/'
+description = """R is a free software environment for statistical computing
+ and graphics."""
+
+toolchain = {'name': 'foss', 'version': '2020a'}
+
+source_urls = ['https://cloud.r-project.org/src/base/R-%(version_major)s']
+sources = [SOURCE_TAR_GZ]
+patches = ['%(name)s-4.1.0_identify-flexiblas-in-configure.patch']
+checksums = [
+    '2036225e9f7207d4ce097e54972aecdaa8b40d7d9911cd26491fac5a0fab38af',  # R-4.1.2.tar.gz
+    '2c6720e2e144ae4fe00842daab0ebba72241080603e0ff1a6ca758738041b257',  # R-4.1.0_identify-flexiblas-in-configure.patch
+]
+
+builddependencies = [
+    ('pkg-config', '0.29.2'),
+    ('Xvfb', '1.20.9'),
+]
+dependencies = [
+    ('X11', '20200222'),                                  
+    ('Mesa', '20.0.2'),					   
+    ('libGLU', '9.0.1'),				  
+    ('cairo', '1.16.0'),				  
+    ('libreadline', '8.0'),				   
+    ('ncurses', '6.2'),					   
+    ('bzip2', '1.0.8'),					   
+    ('XZ', '5.2.5'),					   
+    ('zlib', '1.2.11'),					   
+    ('SQLite', '3.31.1'),				   
+    ('PCRE2', '10.34'),					   
+    ('libpng', '1.6.37'),  # for plotting in R		   
+    ('libjpeg-turbo', '2.0.4'),  # for plottting in R	   
+    ('LibTIFF', '4.1.0'),				   
+    ('Java', '11', '', True),				   
+    ('Tk', '8.6.10'),  # for tcltk			   
+    ('cURL', '7.69.1'),  # for RCurl			   
+    ('libxml2', '2.9.10'),  # for XML			   
+    ('GMP', '6.2.0'),  # for igraph			   
+    ('NLopt', '2.6.1'),  # for nloptr			   
+    ('FFTW', '3.3.8'),  # for fftw			   
+    ('libsndfile', '1.0.28'),  # for seewave		   
+    ('ICU', '66.1'),  # for rJava & gdsfmt		   
+    ('HDF5', '1.10.6'),  # for hdf5r			   
+    ('UDUNITS', '2.2.26'),  # for units			   
+    ('GSL', '2.6'),  # for RcppGSL			   
+    ('ImageMagick', '7.0.10-1'),  # for animation	  
+    ('GLPK', '4.65'),  # for Rglpk			   
+    ('nodejs', '12.16.1'),  # for V8 (required by rstan)  
+    ('GDAL', '3.0.4', '-Python-3.8.2'),  # for sf			  
+    ('libgit2', '1.1.0'),				  
+    ('OpenSSL', '1.1.1e'),				  
+]
+
+# Some R extensions (mclust, quantreg, waveslim for example) require the math library (-lm) to avoid undefined symbols.
+# Adding it to FLIBS makes sure it is present when needed.
+preconfigopts = 'export FLIBS="$FLIBS -lm" && '
+
+configopts = "--with-pic --enable-threads --enable-R-shlib"
+# some recommended packages may fail in a parallel build (e.g. Matrix), and
+# we're installing them anyway below
+configopts += " --with-recommended-packages=no"
+
+# specify that at least EasyBuild v3.5.0 is required,
+# since we rely on the updated easyblock for R to configure correctly w.r.t. BLAS/LAPACK
+easybuild_version = '3.5.0'
+
+exts_default_options = {
+    'source_urls': [
+        'https://cran.r-project.org/src/contrib/Archive/%(name)s',  # package archive
+        'https://cran.r-project.org/src/contrib/',  # current version of packages
+        'https://cran.freestatistics.org/src/contrib',  # mirror alternative for current packages
+    ],
+    'source_tmpl': '%(name)s_%(version)s.tar.gz',
+}
+
+# No packages in bare version
+exts_list = []
+
+moduleclass = 'lang'

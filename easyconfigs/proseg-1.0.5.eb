@@ -1,0 +1,29 @@
+# EasyBuild easyconfig
+# Author: Konstantin Borisenko
+# Kennedy Institute of Rheumatology, University of Oxford
+
+easyblock = 'Tarball'
+
+name = 'proseg'
+version = '1.0.5'
+
+homepage = 'https://github.com/dcjones/proseg'
+description = """ Proseg (probabilistic segmentation) is a cell segmentation method for in situ spatial transcriptomics. Xenium, CosMx, and MERSCOPE platforms are currently supported. """
+
+sources = ['%(name)s-%(version)s.tar.gz']
+checksums = [None]
+
+toolchain = SYSTEM
+
+# sanity checks
+
+sanity_check_paths = {
+     'files': ['proseg','proseg-to-baysor'],
+     'dirs': [] }
+
+sanity_check_commands = ['proseg --help']
+
+modextrapaths = {'PATH': ''}
+
+moduleclass = 'bio'
+

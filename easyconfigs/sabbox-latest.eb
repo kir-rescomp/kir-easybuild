@@ -1,0 +1,32 @@
+# EasyBuild easyconfig
+# Author: Konstantin Borisenko
+# Kennedy Institute of Rheumatology, University of Oxford
+
+easyblock = 'Tarball'
+
+name = 'sabbox'
+version = 'latest'
+
+homepage = 'https://www.blopig.com/blog/tag/sabbox/'
+description = """ SAbBox singularity container package """
+
+sources = ['%(name)s.tar.gz']
+#checksums = ['']
+
+toolchain = SYSTEM
+
+# sanity checks
+
+sanity_check_paths = {
+     'files': ["sabbox_singularity.pdf"],
+     'dirs': [] }
+
+#sanity_check_commands = ['']
+
+modextrapaths = {'PATH': ''}
+
+modextravars = {'SBBX': '/well/kir/mirror/sabbox/sabbox.sif',
+'APPTAINER_BIND': '/well/kir/mirror/sabbox/data:/sabdab-sabpred/data,/well/kir/mirror/sabbox/repository:/sabdab-sabpred/web/repository'}
+
+moduleclass = 'bio'
+

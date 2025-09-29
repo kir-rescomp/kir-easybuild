@@ -1,0 +1,26 @@
+# Humann
+easyblock = 'PythonBundle'
+
+name = 'cellbender'
+version = '0.3.0'
+versionsuffix = '-Python-%(pyver)s'
+
+homepage = 'https://github.com/broadinstitute/CellBender'
+
+description = """CellBender is a software package for eliminating technical artifacts from high-throughput single-cell RNA sequencing (scRNA-seq) data."""
+
+toolchain = {'name': 'foss', 'version': '2020a'}
+
+dependencies = {
+    ('Python', '3.8.2'),
+    ('SciPy-bundle', '2020.03', versionsuffix),
+}
+
+exts_list = [
+    (name, version, {
+        'checksums': ['94a46fb2b5921414ea86213cfdebca267b9ba6ba02df854cbd353980ab3aff42'],
+    }),
+]
+
+use_pip = True
+sanity_pip_check = True

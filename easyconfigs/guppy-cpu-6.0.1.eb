@@ -1,0 +1,29 @@
+# EasyBuild easyconfig
+# Author: Konstantin Borisenko
+# Kennedy Institute of Rheumatology, University of Oxford
+
+easyblock = 'Tarball'
+
+name = 'ont-guppy-cpu'
+version = '6.0.1'
+
+homepage = 'https://nanoporetech.com/nanopore-sequencing-data-analysis'
+description = """ Guppy, an example of the former, is a data processing toolkit that contains Oxford Nanopore's basecalling algorithms, and several bioinformatic post-processing features, such as barcoding/demultiplexing, adapter trimming, and alignment. """
+
+source_urls = ['https://mirror.oxfordnanoportal.com/software/analysis/']
+sources = ['%(name)s_%(version)s_linux64.tar.gz']
+checksums = [None]
+
+toolchain = SYSTEM
+
+# sanity checks
+
+sanity_check_paths = {
+     'files': ['bin/guppy_basecaller','bin/guppy_barcoder'],
+     'dirs': ['bin','data','lib'], }
+
+sanity_check_commands = ['guppy_basecaller -v']
+
+modextrapaths = {'PATH': ''}
+
+moduleclass = 'bio'

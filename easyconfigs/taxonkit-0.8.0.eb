@@ -1,0 +1,29 @@
+# EasyBuild easyconfig
+# Author: Konstantin Borisenko
+# Kennedy Institute of Rheumatology, University of Oxford
+
+easyblock = 'Tarball'
+
+name = 'taxonkit'
+version = '0.8.0'
+
+homepage = 'https://bioinf.shenwei.me/taxonkit/'
+description = """ A Practical and Efficient NCBI Taxonomy Toolkit """
+
+toolchain = SYSTEM
+
+source_urls = ['https://github.com/shenwei356/%(name)s/releases/download/v%(version)s/']
+sources = ['%(name)s_linux_amd64.tar.gz']
+checksums = ['a88c69f00c3d79520a0ee86df21164b7221003f636ac76681821a542696dff1d']
+
+# sanity checks
+
+sanity_check_paths = {
+     'files': ['taxonkit'],
+     'dirs': [''], }
+
+sanity_check_commands = ['taxonkit -h']
+
+modextrapaths = {'PATH': ''}
+
+moduleclass = 'bio'

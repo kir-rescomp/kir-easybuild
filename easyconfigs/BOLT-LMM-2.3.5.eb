@@ -1,0 +1,30 @@
+# EasyBuild easyconfig
+# Author: Konstantin Borisenko
+# Kennedy Institute of Rheumatology, University of Oxford
+
+easyblock = 'Tarball'
+
+name = 'BOLT-LMM'
+version = '2.3.5'
+
+homepage = 'http://alkesgroup.broadinstitute.org/BOLT-LMM'
+description = """ The BOLT-LMM software package currently consists of two main algorithms, the BOLT-LMM algorithm for mixed model association testing, and the BOLT-REML algorithm for variance components analysis (i.e., partitioning of SNP-heritability and estimation of genetic correlations). """
+
+#toolchain = {'name': 'GCCcore', 'version': '9.3.0'}
+toolchain = SYSTEM
+
+source_urls = ['http://data.broadinstitute.org/alkesgroup/BOLT-LMM/downloads']
+sources = ['%(name)s_v%(version)s.tar.gz']
+checksums = ['cfd513e5b9892680c2a0313db3768f43597416787abf393f20429f2f943f9503']
+
+# sanity checks
+
+sanity_check_paths = {
+     'files': ['bolt'],
+     'dirs': ['lib'], }
+
+sanity_check_commands = ['bolt -h']
+
+modextrapaths = {'PATH': ''}
+
+moduleclass = 'bio'

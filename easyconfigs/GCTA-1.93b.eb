@@ -1,0 +1,29 @@
+# EasyBuild easyconfig
+# Author: Konstantin Borisenko
+# Kennedy Institute of Rheumatology, University of Oxford
+
+easyblock = 'Tarball'
+
+name = 'GCTA'
+version = '1.93.2b'
+
+homepage = 'https://cnsgenomics.com/software/gcta/#Overview'
+description = """ GCTA (Genome-wide Complex Trait Analysis) was initially designed to estimate the proportion of phenotypic variance explained by all genome-wide SNPs for complex traits (i.e., the GREML method). It has been subsequently extended for many other analyses to better understand the genetic architecture of complex traits. """
+
+toolchain = SYSTEM
+
+source_urls = ['https://cnsgenomics.com/software/gcta/bin/']
+sources = ['gcta_%(version)seta.zip']
+checksums = ['44354f4909666b760ab3cf538dc143ee3feff5540c2ad237a098766ff9829374']
+
+# sanity checks
+
+sanity_check_paths = {
+     'files': ['gcta64'],
+     'dirs': [''], }
+
+sanity_check_commands = ['']
+
+modextrapaths = {'PATH': ''}
+
+moduleclass = 'bio'

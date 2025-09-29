@@ -1,0 +1,35 @@
+# EasyBuild easyconfig
+# Author: Konstantin Borisenko
+# Kennedy Institute of Rheumatology, University of Oxford
+
+easyblock = 'Tarball'
+
+name = 'java-genomics-toolkit'
+version = '0.0'
+
+homepage = 'https://github.com/timpalpant/java-genomics-toolkit'
+description = """ Collection of scripts for working with Wiggle files and analyzing sequencing data """
+
+sources = [{
+    'filename': '%(name)s-%(version)s.tar.gz',
+    'git_config': {
+        'url': 'https://github.com/timpalpant',
+        'repo_name': 'java-genomics-toolkit',
+        'tag': 'master',
+    },
+}]
+checksums = ['7bec4c921b6709911ef865da9e7233af8c68ea864ecb345e213c2fbd6153417e']
+
+toolchain = SYSTEM
+
+# sanity checks
+
+sanity_check_paths = {
+     'files': ['toolRunner.sh'],
+     'dirs': ['lib'], }
+
+sanity_check_commands = ['']
+
+modextrapaths = {'PATH': ''}
+
+moduleclass = 'bio'

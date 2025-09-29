@@ -1,0 +1,31 @@
+# EasyBuild easyconfig
+# Author: Konstantin Borisenko
+# Kennedy Institute of Rheumatology, University of Oxford
+
+easyblock = 'Tarball'
+
+name = 'SortMeRNA'
+version = '4.3.4'
+
+homepage = 'https://github.com/sortmerna/sortmerna'
+
+description = """ SortMeRNA is a local sequence alignment tool for filtering, mapping and clustering.
+The core algorithm is based on approximate seeds and allows for sensitive analysis of NGS reads. The main application of SortMeRNA is filtering rRNA from metatranscriptomic data. SortMeRNA takes as input files of reads (fasta, fastq, fasta.gz, fastq.gz) and one or multiple rRNA database file(s), and sorts apart aligned and rejected reads into two files. SortMeRNA works with Illumina, Ion Torrent and PacBio data, and can produce SAM and BLAST-like alignments."""
+
+toolchain = SYSTEM
+
+source_urls = ['https://github.com/sortmerna/sortmerna/releases/download/v%(version)s/']
+sources = ['%(namelower)s-%(version)s-Linux.tar.gz']
+checksums = ['17f7cb2eb1d7af8b5355bbe0ac7129ead907590dc0a2fcdd0dc2b9d3ec7f05a0']
+
+# sanity checks
+
+sanity_check_paths = {
+     'files': ['sortmerna'],
+     'dirs': [''], }
+
+sanity_check_commands = ['sortmerna --version']
+
+modextrapaths = {'PATH': ''}
+
+moduleclass = 'bio'

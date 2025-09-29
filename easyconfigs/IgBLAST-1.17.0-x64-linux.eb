@@ -1,0 +1,40 @@
+# Easybuild Easyconfig
+#
+# John Dey <jfdey@fredhutch.org>
+#
+# Fred Hutchinson Cancer Research Center - Seattle Washington
+#
+# Version modified by
+# Konstantin Borisenko
+# Kennedy Institute of Rheumatology, University of Oxford
+
+easyblock = "Tarball"
+
+name = 'IgBLAST'
+version = '1.17.0'
+versionsuffix = '-x64-linux'
+
+homepage = 'https://ncbi.github.io/igblast'
+description = """IgBLAST faclilitates the analysis of immunoglobulin and T cell receptor variable domain sequences."""
+
+toolchain = SYSTEM
+
+source_urls = ['https://ftp.ncbi.nih.gov/blast/executables/igblast/release/%(version)s']
+sources = ['ncbi-%(namelower)s-%(version)s-x64-linux.tar.gz']
+checksums = ['133060155f0383fb302e71935c10a4e5f3e7c46e2e9a87dbdbaf15110cee2768']
+
+dependencies = [('libuv','1.37.0','-GCCcore-9.3.0')]
+#('glib','4.0.3')]
+
+sanity_check_paths = {
+    'files': ["bin/igblastn", 'bin/igblastp'],
+    'dirs': ['bin']
+}
+
+sanity_check_commands = ['igblastn -h']
+
+modextrapaths = {'PATH': ''}
+
+modextravars = {'IGDATA': '%(installdir)s/internal_data'}
+
+moduleclass = 'bio'

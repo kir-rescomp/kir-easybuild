@@ -1,0 +1,31 @@
+# EasyBuild easyconfig
+# Author: Konstantin Borisenko
+# Kennedy Institute of Rheumatology, University of Oxford
+
+easyblock = 'PythonPackage'
+
+name = 'CPAT'
+version = '3.0.4'
+versionsuffix='-Python-%(pyver)s'
+
+homepage = 'https://cpat.readthedocs.io/en/latest/#'
+description = """ CPAT is a bioinformatics tool to predict s coding probability based on the RNA sequence characteristics. To achieve this goal, CPAT calculates scores of these 4 linguistic features from a set of known protein-coding genes and another set of non-coding genes.RNA """
+
+toolchain = {'name': 'foss', 'version': '2020a'}
+
+sources = [SOURCE_TAR_GZ]
+checksums = ['6d832f20729f8fc814384a27a4fcebcf81b11c0e6d80a404b4c4860d17e7d935']
+
+dependencies = [
+    ('Python','3.8.2'),
+    ('Pysam','0.16.0'),
+    ('SciPy-bundle','2020.03',versionsuffix)
+]
+
+use_pip = True
+download_dep_fail = True
+sanity_pip_check = True
+
+options = {'modulename': False}
+
+moduleclass = 'bio'

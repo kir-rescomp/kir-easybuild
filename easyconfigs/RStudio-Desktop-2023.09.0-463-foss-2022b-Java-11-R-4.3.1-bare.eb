@@ -1,0 +1,30 @@
+easyblock = 'Tarball'
+
+name = 'RStudio-Desktop'
+version = '2023.09.0-463'
+versionsuffix = '-Java-%(javaver)s-R-%(rver)s-bare'
+
+homepage = 'https://www.rstudio.com/'
+description = """This is the RStudio Desktop version.
+RStudio is a set of integrated tools designed to help you be more productive with R."""
+
+toolchain = {'name': 'foss', 'version': '2022b'}
+
+source_urls = ['https://download1.rstudio.org/electron/centos7/x86_64']
+sources = ['rstudio-%(version)s-x86_64-fedora.tar.gz']
+checksums = ['c7cae581ccb831862a5f14f5eb81f3139de96836f15a31137c5cf037e4f741eb']
+
+dependencies = [
+    ('PostgreSQL','15.2'),
+    ('Java', '11', '', SYSTEM),
+    ('R', '4.3.1', '-bare'),
+]
+
+sanity_check_paths = {
+    'files': ['rstudio'],
+    'dirs': ['resources'],
+}
+
+modextrapaths = {'PATH': ''}
+
+moduleclass = 'lang'

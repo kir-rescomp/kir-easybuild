@@ -1,0 +1,33 @@
+# EasyBuild easyconfig
+# Author: Konstantin Borisenko
+# Kennedy Institute of Rheumatology, University of Oxford
+
+easyblock = 'Tarball'
+
+name = 'MZmine'
+version = '2.53'
+
+homepage = 'http://mzmine.github.io/download.html'
+description = """ MZmine 2 is an open-source software for mass-spectrometry data processing, with the main focus on LC-MS data. """
+
+source_urls = ['https://github.com/mzmine/mzmine2/releases/download/v%(version)s/']
+sources = ['%(name)s-%(version)s-Linux.zip']
+checksums = ['39666d4541321ca10e8818b0a056614a584f04c89c153554190a812ad484e76f']
+
+toolchain = SYSTEM
+
+postinstallcmds = ["mv %(installdir)s/start%(name)s-Linux %(installdir)s/%(name)s"]
+
+# sanity checks
+
+sanity_check_paths = {
+     'files': ['%(name)s'],
+     'dirs': ['bin'], }
+
+sanity_check_commands = ['']
+
+modloadmsg = "To execute MZmine run: MZmine"
+
+modextrapaths = {'PATH': ''}
+
+moduleclass = 'bio'

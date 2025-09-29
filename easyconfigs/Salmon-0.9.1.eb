@@ -1,0 +1,29 @@
+# This file is an EasyBuild reciPY as per https://github.com/easybuilders/easybuild
+
+easyblock = 'Tarball'
+
+name = 'Salmon'
+version = '0.9.1'
+
+homepage = 'https://github.com/COMBINE-lab/%(namelower)s'
+description = """Salmon is a wicked-fast program to produce a highly-accurate,
+ transcript-level quantification estimates from RNA-seq data."""
+
+toolchain = SYSTEM
+
+#source_urls = ['https://github.com/COMBINE-lab/%(namelower)s/releases/download/v%(version)s/']
+#sources = ['%(name)s-%(version)s_linux_x86_64.tar.gz']
+#checksums = ['67d19cec3ad4df4f6b24f1d64be39f445227e197c451e2eeb2aa0b71ee59d093']
+
+sources = ['%(namelower)s_%(version)s.tar.gz']
+
+sanity_check_paths = {
+    'files': ['bin/%(namelower)s'],
+    'dirs': ['lib']
+}
+
+sanity_check_commands = ['%(namelower)s -v']
+
+modextrapaths = {'PATH': ''}
+
+moduleclass = 'bio'

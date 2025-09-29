@@ -1,0 +1,31 @@
+# EasyBuild easyconfig
+# Author: Konstantin Borisenko
+# Kennedy Institute of Rheumatology, University of Oxford
+
+easyblock = 'Tarball'
+
+name = 'vdjtools'
+version = '1.2.1'
+
+homepage = 'https://vdjtools-doc.readthedocs.io/en/master/index.html'
+description = """ VDJtools is an open-source Java/Groovy-based framework designed to facilitate analysis of immune repertoire sequencing (RepSeq) data. VDJtools computes a wide set of statistics and is able to perform various forms of cross-sample analysis. Both comprehensive tabular output and publication-ready plots are provided."""
+
+source_urls = ['https://github.com/mikessh/%(name)s/releases/download/%(version)s/']
+sources = ['%(name)s-%(version)s.zip']
+checksums = ['69065a80708b0c098fa271cd3b4f4928390f2bc8476a7c2b6aa3be0f11e29ba0']
+
+toolchain = SYSTEM
+#dependencies = [('Java','1.8.0_192(1.8)')]
+
+# sanity checks
+
+sanity_check_paths = {
+     'files': ['%(name)s-%(version)s.jar'],
+     'dirs': [''], }
+
+sanity_check_commands = ['']
+
+modextrapaths = {'PATH': ''}
+#modaliases = {'%(name)s': 'java -jar %(name)s-%(version)s.jar'}
+
+moduleclass = 'bio'

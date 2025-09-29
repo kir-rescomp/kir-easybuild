@@ -1,0 +1,28 @@
+# EasyBuild easyconfig
+# Author: Konstantin Borisenko
+# Kennedy Institute of Rheumatology, University of Oxford
+
+easyblock = 'Tarball'
+
+name = 'geomx'
+version = '2.3.3.10'
+
+homepage = ''
+description = """ GeoMx command line pipeline """
+
+sources = ['%(name)s-%(version)s.tar.gz']
+checksums = [None]
+
+toolchain = SYSTEM
+
+# sanity checks
+
+sanity_check_paths = {
+     'files': ['geomxngspipeline'],
+     'dirs': [] }
+
+sanity_check_commands = ['geomxngspipeline -h']
+
+modextrapaths = {'PATH': ''}
+
+moduleclass = 'bio'

@@ -1,0 +1,29 @@
+# EasyBuild easyconfig
+# Author: Konstantin Borisenko
+# Kennedy Institute of Rheumatology, University of Oxford
+
+easyblock = 'Tarball'
+
+name = 'xeniumranger'
+version = '2.0.1'
+
+homepage = 'https://www.10xgenomics.com/support/software/xenium-ranger/latest'
+description = """ The Xenium In Situ software suite is a set of software applications for analyzing and visualizing in situ gene expression data produced by the Xenium Analyzer. Xenium Ranger provides flexible off-instrument reanalysis of Xenium In Situ data. Relabel transcripts, resegment cells with the latest 10x segmentation algorithms, or import your own segmentation data to assign transcripts to cells. """
+
+sources = ['%(name)s-%(version)s.tar.gz']
+#checksums = ['']
+
+toolchain = SYSTEM
+
+# sanity checks
+
+sanity_check_paths = {
+     'files': ['xeniumranger'],
+     'dirs': ['lib','mro','external'] }
+
+sanity_check_commands = ['xeniumranger -h']
+
+modextrapaths = {'PATH': ''}
+
+moduleclass = 'bio'
+

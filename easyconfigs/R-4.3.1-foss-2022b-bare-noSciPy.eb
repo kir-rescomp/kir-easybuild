@@ -1,0 +1,85 @@
+# Built with EasyBuild version 4.8.0 on 2023-07-19_06-13-31
+name = 'R'
+version = '4.3.1'
+versionsuffix = '-bare-noSciPy'
+
+homepage = 'https://www.r-project.org/'
+description = """R is a free software environment for statistical computing
+ and graphics."""
+
+toolchain = {'name': 'foss', 'version': '2022b'}
+
+source_urls = ['https://cloud.r-project.org/src/base/R-%(version_major)s']
+sources = [SOURCE_TAR_GZ]
+checksums = ['8dd0bf24f1023c6f618c3b317383d291b4a494f40d73b983ac22ffea99e4ba99']
+
+builddependencies = [
+    ('pkgconf', '1.9.3'),
+    ('Xvfb', '21.1.6'),
+    ('Autotools', '20220317'),
+    ('CMake', '3.24.3'),
+]
+dependencies = [
+    ('X11', '20221110'),
+    ('Mesa', '22.2.4'),
+    ('libGLU', '9.0.2'),
+    ('cairo', '1.17.4'),
+    ('libreadline', '8.2'),
+    ('ncurses', '6.3'),
+    ('bzip2', '1.0.8'),
+    ('XZ', '5.2.7'),
+    ('zlib', '1.2.12'),
+    ('SQLite', '3.39.4'),
+    ('PCRE2', '10.40'),
+    ('libpng', '1.6.38'),  # for plotting in R
+    ('libjpeg-turbo', '2.1.4'),  # for plottting in R
+    ('LibTIFF', '4.4.0'),
+    ('Java', '11', '', SYSTEM),
+    ('Tk', '8.6.12'),  # for tcltk
+    ('cURL', '7.86.0'),  # for RCurl
+    ('libxml2', '2.10.3'),  # for XML
+    ('GMP', '6.2.1'),  # for igraph
+    ('NLopt', '2.7.1'),  # for nloptr
+    ('FFTW', '3.3.10'),  # for fftw
+    ('libsndfile', '1.2.0'),  # for seewave
+    ('ICU', '72.1'),  # for rJava & gdsfmt
+    ('HDF5', '1.14.0'),  # for hdf5r
+    ('UDUNITS', '2.2.28'),  # for units
+    ('GSL', '2.7'),  # for RcppGSL
+    ('ImageMagick', '7.1.0-53'),  # for animation
+    ('GLPK', '5.0'),  # for Rglpk
+    ('nodejs', '18.12.1'),  # for V8 (required by rstan)
+    ('GDAL', '3.6.2', '-noSciPy'),  # for sf
+    ('MPFR', '4.2.0'),  # for Rmpfr
+    ('libgit2', '1.5.0'),
+    ('OpenSSL', '1.1', '', SYSTEM),
+]
+
+# Some R extensions (mclust, quantreg, waveslim for example) require the math library (-lm) to avoid undefined symbols.
+# Adding it to FLIBS makes sure it is present when needed.
+preconfigopts = 'export FLIBS="$FLIBS -lm" && '
+
+configopts = "--with-pic --enable-threads --enable-R-shlib"
+# some recommended packages may fail in a parallel build (e.g. Matrix), and
+# we're installing them anyway below
+configopts += " --with-recommended-packages=no"
+
+# specify that at least EasyBuild v3.5.0 is required,
+# since we rely on the updated easyblock for R to configure correctly w.r.t. BLAS/LAPACK
+easybuild_version = '3.5.0'
+
+exts_default_options = {
+    'source_urls': [
+        'https://cran.r-project.org/src/contrib/Archive/%(name)s',  # package archive
+        'https://cran.r-project.org/src/contrib/',  # current version of packages
+        'https://cran.freestatistics.org/src/contrib',  # mirror alternative for current packages
+    ],
+    'source_tmpl': '%(name)s_%(version)s.tar.gz',
+}
+
+# No packages in bare version
+
+exts_list = []
+
+moduleclass = 'lang'
+

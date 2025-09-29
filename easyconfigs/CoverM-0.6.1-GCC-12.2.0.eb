@@ -1,0 +1,37 @@
+# EasyBuild easyconfig
+# Author: Konstantin Borisenko
+# Kennedy Institute of Rheumatology, University of Oxford
+
+easyblock = 'Tarball'
+
+name = 'CoverM'
+version = '0.6.1'
+
+homepage = 'https://github.com/wwood/CoverM'
+description = "CoverM aims to be a configurable, easy to use and fast DNA read coverage and relative abundance calculator focused on metagenomics applications. CoverM calculates coverage of genomes/MAGs or individual contigs. Calculating coverage by read mapping, its input can either be BAM files sorted by reference, or raw reads and reference genomes in various formats."
+
+toolchain = {'name': 'GCC', 'version': '12.2.0'}
+
+source_urls = ['https://github.com/wwood/CoverM/releases/download/v%(version)s/']
+sources = ['%(namelower)s-x86_64-unknown-linux-musl-%(version)s.tar.gz']
+checksums = ['42281ee1a941ef7bd8c460a6b9af5a60fd34f65506bb2d30a934a26ed9aff016']
+
+dependencies = [
+    ('SAMtools', '1.17'),
+    ('minimap2', '2.26'),
+    ('FastANI', '1.33'),
+    ('bwa-mem2', '2.2.1', '', SYSTEM),
+    ('dashing', '1.0.3', '', SYSTEM),
+]
+ 
+# sanity checks
+
+sanity_check_paths = {
+     'files': ['%(namelower)s'],
+     'dirs': [''], }
+
+sanity_check_commands = ['%(namelower)s --version']
+
+modextrapaths = {'PATH': ''}
+
+moduleclass = 'bio'

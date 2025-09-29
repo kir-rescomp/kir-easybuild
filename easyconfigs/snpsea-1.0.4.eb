@@ -1,0 +1,32 @@
+# EasyBuild easyconfig
+# Author: Konstantin Borisenko
+# Kennedy Institute of Rheumatology, University of Oxford
+
+easyblock = 'Tarball'
+
+name = 'snpsea'
+version = '1.0.4'
+
+homepage = 'https://github.com/slowkow/snpsea'
+description = "SNPsea is an algorithm to identify cell types and pathways likely to be affected by risk loci."
+
+toolchain = SYSTEM
+
+github_account = 'slowkow'
+source_urls = [GITHUB_SOURCE]
+sources = [SOURCE_TAR_GZ]
+#checksums = ['']
+
+postinstallcmds = ['mv %(installdir)s/bin/%(name)s-linux64 %(installdir)s/bin/%(name)s','rm %(installdir)s/bin/%(name)s-osx64']
+
+# sanity checks
+
+sanity_check_paths = {
+     'files': ['bin/%(name)s'],
+     'dirs': ['bin'], }
+
+#sanity_check_commands = ['%(name)s -h']
+
+modextrapaths = {'PATH': ''}
+
+moduleclass = 'bio'

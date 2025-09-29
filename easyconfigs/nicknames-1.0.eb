@@ -1,0 +1,28 @@
+# EasyBuild easyconfig
+# Author: Konstantin Borisenko
+# Kennedy Institute of Rheumatology, University of Oxford
+
+easyblock = 'Tarball'
+
+name = 'nicknames'
+version = '1.0'
+
+homepage = ''
+description = """ A set of scripts to automatically decode BMRC user names to a predefined nickname stored in ~/.nick file """
+
+sources = ['%(name)s_%(version)s.tar.gz']
+checksums = [None]
+
+toolchain = SYSTEM
+
+# sanity checks
+
+sanity_check_paths = {
+     'files': ['nick2bmrc','bmrc2nick','nicknames'],
+     'dirs': [] }
+
+sanity_check_commands = ['nicknames -h']
+
+modextrapaths = {'PATH': ''}
+
+moduleclass = 'tools'

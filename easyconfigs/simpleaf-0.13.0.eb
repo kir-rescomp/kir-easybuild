@@ -1,0 +1,41 @@
+# EasyBuild easyconfig
+# Author: Konstantin Borisenko
+# Kennedy Institute of Rheumatology, University of Oxford
+
+easyblock = 'Conda'
+
+name = 'simpleaf'
+version = '0.13.0'
+
+homepage = 'https://simpleaf.readthedocs.io/'
+description = """ simpleaf is a program to simplify and customize the running and configuration of single-cell processing with alevin-fry. """
+
+toolchain = SYSTEM
+
+requirements = "%(name)s=%(version)s"
+channels = ['bioconda', 'conda-forge']
+
+builddependencies = [
+    ('Miniconda3', '23.1.0-1'),
+    ('HDF5', '1.10.6', '-gompi-2020a')
+]
+
+dependencies = [
+    ('alevin-fry', '0.8.1'),
+]
+
+# sanity checks
+
+sanity_check_paths = {
+     'files': ["bin/simpleaf"],
+     'dirs': [] }
+
+sanity_check_commands = ['simpleaf -h']
+
+modextrapaths = {'PATH': ''}
+
+modextravars = {'ALEVIN_FRY_HOME': '/apps/kir/eb/skylake/software/alevin-fry/0.8.1/bin'}
+#modtclfooter = "setenv ALEVIN_FRY_HOME /apps/kir/eb/skylake/software/alevin-fry/0.8.1/bin"
+
+moduleclass = 'bio'
+

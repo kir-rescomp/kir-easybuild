@@ -1,0 +1,31 @@
+# EasyBuild easyconfig
+# Author: Konstantin Borisenko
+# Kennedy Institute of Rheumatology, University of Oxford
+
+easyblock = 'MakeCp'
+
+name = 'ngsutils'
+version = '0.5.9'
+
+homepage = 'https://ngsutils.org/'
+description = """ NGSUtils is a suite of software tools for working with next-generation sequencing datasets. """
+
+source_urls = ['https://github.com/%(name)s/%(name)s/archive/refs/tags/']
+sources = ['%(name)s-%(version)s.tar.gz']
+checksums = ['37587921459e91ad0dbaebc70bea04e9837464214a8c12e08c5db0a1e7078440']
+
+toolchain = SYSTEM
+
+files_to_copy=['LICENSE','Makefile','README.md','VERSION','bin','init.sh','ngsutils','requirements.txt','setup.py','support','test.sh','venv']
+
+# sanity checks
+
+sanity_check_paths = {
+     'files': ['test.sh'],
+     'dirs': ['bin'], }
+
+sanity_check_commands = ['']
+
+modextrapaths = {'PATH': ''}
+
+moduleclass = 'bio'

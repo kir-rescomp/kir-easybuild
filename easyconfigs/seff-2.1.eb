@@ -1,0 +1,29 @@
+# EasyBuild easyconfig
+# Author: Konstantin Borisenko
+# Kennedy Institute of Rheumatology, University of Oxford
+
+easyblock = 'Tarball'
+
+name = 'seff'
+version = '2.1'
+
+homepage = 'https://github.com/SchedMD/slurm/blob/master/contribs/seff/seff'
+description = """ Slurm job efficiency reporting """
+
+sources = ['%(name)s-%(version)s.tar.gz']
+#checksums = ['']
+
+toolchain = SYSTEM
+
+# sanity checks
+
+sanity_check_paths = {
+     'files': ["seff"],
+     'dirs': [] }
+
+#sanity_check_commands = ['']
+
+modextrapaths = {'PATH': ''}
+
+moduleclass = 'devel'
+

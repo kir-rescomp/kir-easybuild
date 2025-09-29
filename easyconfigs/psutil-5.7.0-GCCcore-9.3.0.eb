@@ -1,0 +1,31 @@
+# EasyBuild easyconfig
+# Author: Konstantin Borisenko
+# Kennedy Institute of Rheumatology, University of Oxford
+
+easyblock = 'PythonPackage'
+
+name = 'psutil'
+version = '5.7.0'
+
+homepage = 'https://github.com/giampaolo/psutil'
+description = """A cross-platform process and system utilities module for Python"""
+
+toolchain = {'name': 'GCCcore', 'version': '9.3.0'}
+
+source_urls = [PYPI_SOURCE]
+sources = [SOURCE_TAR_GZ]
+checksums = ['685ec16ca14d079455892f25bd124df26ff9137664af445563c1bd36629b5e0e']
+
+use_pip = True
+download_dep_fail = True
+
+dependencies = [('Python', '3.8.2')]
+
+builddependencies = [('binutils', '2.34')]
+
+sanity_check_paths = {
+    'files': [],
+    'dirs': ['lib/python%(pyshortver)s/site-packages'],
+}
+
+moduleclass = 'lib'

@@ -1,0 +1,31 @@
+# EasyBuild easyconfig
+# Author: Konstantin Borisenko
+# Kennedy Institute of Rheumatology, University of Oxford
+
+easyblock = 'Conda'
+
+name = 'alevin-fry'
+version = '0.8.1'
+
+homepage = 'https://github.com/COMBINE-lab/alevin-fry'
+description = """ alevin-fry is a suite of tools for the rapid, accurate and memory-frugal processing single-cell and single-nucleus sequencing data. """
+
+toolchain = SYSTEM
+
+requirements = "%(name)s=%(version)s"
+channels = ['bioconda', 'conda-forge']
+
+builddependencies = [('Miniconda3', '23.1.0-1')]
+
+# sanity checks
+
+sanity_check_paths = {
+     'files': ["bin/alevin-fry"],
+     'dirs': [] }
+
+sanity_check_commands = ['alevin-fry -h','alevin-fry -V']
+
+modextrapaths = {'PATH': ''}
+
+moduleclass = 'bio'
+
