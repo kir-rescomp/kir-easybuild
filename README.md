@@ -20,6 +20,9 @@ flowchart TD
     class A,B,C,D navyStyle
 
     class A monospaceClass
+    class B monospaceClass
+    class C monospaceClass
+    class D monospaceClass
     classDef monospaceClass font-family: monospace, monospace;
 ```
 
