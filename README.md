@@ -18,6 +18,9 @@ flowchart TD
     
     classDef navyStyle fill:#000080,stroke:#000080,color:#fff
     class A,B,C,D navyStyle
+
+    class A monospaceClass
+    classDef monospaceClass font-family: monospace, monospace;
 ```
 
 
