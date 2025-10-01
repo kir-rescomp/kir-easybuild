@@ -1,0 +1,31 @@
+easyblock = 'PythonPackage'
+
+name = 'Binning_refiner'
+version = '1.4.3'
+
+homepage = 'https://github.com/songweizhi/Binning_refiner'
+description = """Tool for improving population genome bins from metagenomic datasets."""
+
+toolchain = {'name': 'foss', 'version': '2023a'}
+
+source_urls = [PYPI_SOURCE]
+sources = ['%(name)s-%(version)s.tar.gz']
+checksums = ['8da5ed80e1d590b8d418ae16f3b8fac2ddeead270af18b291c7e55c044ac0d33']  # Run 'eb --fetch' to get the correct checksum
+
+dependencies = [
+    ('Python', '3.11.3','',('GCCcore','12.3.0')),
+    ('Biopython', '1.83','',('foss','2023a')),
+]
+
+download_dep_fail = True
+use_pip = True
+sanity_pip_check = True
+
+sanity_check_paths = {
+    'files': ['bin/Binning_refiner'],
+    'dirs': ['lib/python%(pyshortver)s/site-packages'],
+}
+
+sanity_check_commands = ['Binning_refiner -h']
+
+moduleclass = 'bio'
