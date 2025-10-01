@@ -28,4 +28,7 @@ sanity_check_paths = {
 
 sanity_check_commands = ['Binning_refiner -h']
 
+#Override the default module import check  - module name has uppercase B
+options = {'modulename': 'Binning_refiner'}
+
 moduleclass = 'bio'
