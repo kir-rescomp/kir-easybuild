@@ -1,0 +1,28 @@
+easyblock = 'CMakeMake'
+
+name = 'DIAMOND'
+version = '2.1.14'
+
+homepage = 'https://github.com/bbuchfink/diamond'
+description = "Accelerated BLAST compatible local sequence aligner"
+
+toolchain = {'name': 'GCC', 'version': '12.3.0'}
+
+source_urls = ['https://github.com/bbuchfink/%(namelower)s/archive/']
+sources = ['v%(version)s.tar.gz']
+checksums = ['b15407ec06508dd71afbdb69da47a0983b9926e4b7f4591b0f3a13e64b38a536']
+
+separate_build_dir = True
+
+builddependencies = [
+    ('CMake', '3.31.8','',SYSTEM)
+]
+dependencies = [('zlib', '1.2.13','',SYSTEM)]
+
+sanity_check_paths = {
+    'files': ['bin/%(namelower)s'],
+    'dirs': [],
+}
+sanity_check_commands = ["diamond help"]
+
+moduleclass = 'bio'
