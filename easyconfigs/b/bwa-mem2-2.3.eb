@@ -1,0 +1,29 @@
+# EasyBuild easyconfig
+# Author: Dinindu Senanayake
+# Kennedy Institute of Rheumatology, University of Oxford
+
+easyblock = 'Tarball'
+
+name = 'bwa-mem2'
+version = '2.3'
+
+homepage = 'https://github.com/bwa-mem2/bwa-mem2'
+description = "The tool bwa-mem2 is the next version of the bwa-mem algorithm in bwa. It produces alignment identical to bwa and is ~1.3-3.1x faster depending on the use-case, dataset and the running machine."
+
+toolchain = SYSTEM
+
+source_urls = [GITHUB_RELEASE]
+sources = ['%(name)s-%(version)s_x64-linux.tar.bz2']
+checksums = ['112f3a3ebf3f8c2377f52d61446ead392c4a98ecf89e7629617d3ed16f4e73cb']
+
+# sanity checks
+
+sanity_check_paths = {
+     'files': ['%(name)s'],
+     'dirs': [''], }
+
+sanity_check_commands = ['%(name)s version']
+
+modextrapaths = {'PATH': ''}
+
+moduleclass = 'bio'
