@@ -1,0 +1,26 @@
+name = 'SuiteSparse'
+version = '7.11.0'
+
+homepage = 'https://faculty.cse.tamu.edu/davis/suitesparse.html'
+description = """SuiteSparse is a collection of libraries manipulate sparse matrices."""
+
+toolchain = {'name': 'foss', 'version': '2023a'}
+toolchainopts = {'unroll': True, 'pic': True}
+
+source_urls = ['https://github.com/DrTimothyAldenDavis/SuiteSparse/archive']
+sources = ['v%(version)s.tar.gz']
+checksums = ['93ed4c4e546a49fc75884c3a8b807d5af4a91e39d191fbbc60a07380b12a35d1']
+
+builddependencies = [
+    ('CMake', '3.31.8', '', SYSTEM),
+]
+
+dependencies = [
+    ('METIS', '5.1.0','',('GCCcore','12.3.0')),
+    ('MPFR', '4.2.0','',('GCCcore','12.3.0')),
+]
+
+# make sure that bin/demo can find libsuitesparseconfig.so.5 during build
+#prebuildopts = "export LD_LIBRARY_PATH=%(builddir)s/SuiteSparse-%(version)s/lib:$LD_LIBRARY_PATH && "
+
+moduleclass = 'numlib'
