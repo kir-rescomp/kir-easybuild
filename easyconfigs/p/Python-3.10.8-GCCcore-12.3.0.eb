@@ -1,0 +1,77 @@
+# Python-3.8.2-GCCcore-9.3.0-bare
+# by Konstantin Borisenko
+# Kennedy Institute of Rheumatology
+
+name = 'Python'
+version = '3.10.8'
+
+
+homepage = 'https://python.org/'
+description = """Python is a programming language that lets you work more quickly and integrate your systems
+ more effectively."""
+
+toolchain = {'name': 'GCCcore', 'version': '12.3.0'}
+toolchainopts = {'pic': True}
+
+source_urls = ['https://www.python.org/ftp/%(namelower)s/%(version)s/']
+sources = [SOURCE_TGZ]
+checksums = ['f400c3fb394b8bef1292f6dc1292c5fadc3533039a5bc0c3e885f3e16738029a']
+
+builddependencies = [
+    ('UnZip', '6.0'),
+#     ('pkg-config', '0.29.2'),   # Don't see the need to use the module over system pkg-config 
+#    ('git', '2.23.0', '-nodocs'),  # required for pbr
+]
+
+dependencies = [
+    ('binutils', '2.40'),  # required for pip install that involves compilation
+    ('bzip2', '1.0.8'),  # required for bz2 package in Python stdlib
+    ('zlib', '1.2.13'),
+    ('libreadline', '8.2'),
+    ('ncurses', '6.4'),
+    ('SQLite', '3.42.0'),
+    ('XZ', '5.4.2'),
+    ('GMP', '6.2.1'),  # required for pycrypto
+    ('libffi', '3.4.4'),
+    # OS dependency should be preferred if the os version is more recent then this version,
+    # it's nice to have an up to date openssl for security reasons
+    # Python 3.7 requires OpenSSL >= 1.0.2, uncomment line below if OS version is too old (e.g. CentOS 6)
+    ('OpenSSL', '1.1','',SYSTEM),
+]
+
+#osdependencies = [('openssl-devel', 'libssl-dev', 'libopenssl-devel')]
+
+exts_default_options = {
+    'source_urls': [PYPI_SOURCE],
+}
+
+# order is important!
+# package versions updated 2023-05-17
+exts_list = [
+    ('flit_core', '3.12.0', {
+        'checksums': ['18f63100d6f94385c6ed57a72073443e1a71a4acb4339491615d0f16d6ff01b2'],
+    }),
+    ('wheel', '0.45.1', {
+        'checksums': ['661e1abd9198507b1409a20c02106d9670b2576e916d58f520316666abca6729'],
+    }),
+    ('setuptools', '80.9.0', {
+        'checksums': ['f36b47402ecde768dbfafc46e8e4207b4360c654f1f3bb84475f0a28628fb19c'],
+    }),
+    ('tomli', '2.3.0', {
+        'checksums': ['64be704a875d2a59753d80ee8a533c3fe183e3f06807ff7dc2232938ccb01549'],
+    }),
+    ('packaging', '25.0', {
+        'checksums': ['d443872c98d677bf60f6a1f2f8c1cb748e8fe762d2bf9d3148b5599295b0fc4f'],
+    }),
+    ('typing_extensions', '4.15.0', {
+        'checksums': ['0cea48d173cc12fa28ecabc3b837ea3cf6f38c6d1136f85cbaaf598984861466'],
+    }),
+    ('setuptools_scm', '9.2.1', {
+        'checksums': ['2f5b21e45205e47ed3976e58bc29c38f49bb9b6f07c625c7fd2823871694b244'],
+    }),
+    ('pip', '25.2', {
+        'checksums': ['578283f006390f85bb6282dffb876454593d637f5d1be494b5202ce4877e71f2'],
+    }),
+]
+
+moduleclass = 'lang'
