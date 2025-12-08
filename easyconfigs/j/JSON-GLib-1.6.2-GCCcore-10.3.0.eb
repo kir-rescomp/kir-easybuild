@@ -1,0 +1,41 @@
+easyblock = 'MesonNinja'
+
+name = 'JSON-GLib'
+version = '1.9.2'
+
+homepage = 'https://wiki.gnome.org/Projects/JsonGlib'
+description = """JSON-GLib implements a full JSON parser and generator using GLib and GObject,
+ and integrates JSON with GLib data types."""
+
+toolchain = {'name': 'GCCcore', 'version': '12.3.0'}
+
+source_urls = ['https://download.gnome.org/sources/json-glib/%(version_major_minor)s']
+sources = [SOURCELOWER_TAR_XZ]
+checksums = ['8f9f04e0045bda82affd464ee575796600fe29014b817392a3b72ceb2d10c595']
+
+builddependencies = [
+    ('binutils', '2.40','',SYSTEM),
+    ('Meson', '1.3.1'),
+    ('Ninja', '1.11.1'),
+#    ('pkg-config', '0.29.2'), # Commenting out in favour of system pkg-config
+]
+
+dependencies = [
+    ('GLib', '2.77.1'),
+    ('GObject-Introspection', '1.76.1'),
+]
+
+configopts = '-Ddocumentation=disabled'
+
+sanity_check_paths = {
+    'files': ['bin/json-glib-format', 'bin/json-glib-validate',
+              'lib/libjson-glib-%%(version_major)s.0.%s' % SHLIB_EXT],
+    'dirs': ['include/json-glib-%(version_major)s.0/json-glib', 'lib/pkgconfig', 'share'],
+}
+
+sanity_check_commands = [
+    "json-glib-format --help",
+    "json-glib-validate --help",
+]
+
+moduleclass = 'lib'
