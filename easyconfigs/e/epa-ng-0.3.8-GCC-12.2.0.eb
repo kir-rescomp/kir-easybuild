@@ -1,0 +1,42 @@
+easyblock = 'MakeCp'
+
+name = 'epa-ng'
+version = '0.3.8'  # Check latest release at https://github.com/pierrebarbera/epa-ng/releases
+
+homepage = 'https://github.com/pierrebarbera/epa-ng'
+description = """
+Fast, parallel, 
+highly accurate Maximum Likelihood Phylogenetic Placement, by the team behind RAxML(-ng)
+"""
+
+toolchain = {'name': 'GCC', 'version': '12.2.0'}
+
+source_urls = ['https://github.com/pierrebarbera/epa-ng/archive/']
+sources = ['v%(version)s.tar.gz']
+checksums = ['d1db23919f49cfad202b18623e5eb30c3d6cedcc1705b944221daea8131cbb74']  # Add SHA256 checksum after downloading
+
+builddependencies = [('CMake', '3.31.8','',SYSTEM)]
+
+dependencies = [
+    ('GSL', '2.7'),  # GNU Scientific Library - check version available in your EasyBuild
+]
+
+# Build with make
+buildopts = ''  # Add any make flags if needed, e.g., 'CXX="$CXX" CXXFLAGS="$CXXFLAGS"'
+
+# Files to copy to installation directory
+files_to_copy = [
+    (['bin/epa-ng'], 'bin'),
+    # Add any other files like documentation if needed
+    # (['README.md', 'LICENSE'], 'share/doc/%(name)s'),
+]
+
+# Sanity check
+sanity_check_paths = {
+    'files': ['bin/epa-ng'],
+    'dirs': ['bin'],
+}
+
+sanity_check_commands = ['epa-ng --version']
+
+moduleclass = 'bio'
