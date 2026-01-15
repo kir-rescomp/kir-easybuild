@@ -1,0 +1,60 @@
+# Updated from previous config
+# Author: Pavel Grochal (INUITS)
+# License: GPLv2
+
+easyblock = 'PythonBundle'
+
+name = 'GTDB-Tk'
+version = '2.6.1'
+
+homepage = 'https://github.com/Ecogenomics/GTDBTk'
+description = "A toolkit for assigning objective taxonomic classifications to bacterial and archaeal genomes."
+
+toolchain = {'name': 'foss', 'version': '2023a'}
+
+dependencies = [
+    ('Python', '3.11.3','',('GCCcore','12.3.0')),
+    ('DendroPy', '4.6.1','',('GCCcore','12.3.0')),
+    ('matplotlib', '3.7.2','',('gfbf','2023a')),
+    ('prodigal', '2.6.3','',('GCCcore','12.3.0')),
+    ('HMMER', '3.4','',('gompi','2023a')),
+    ('pplacer', '1.1.alpha19', '', SYSTEM),
+    ('FastANI', '1.34','',('GCC','12.3.0')),
+    ('FastTree', '2.1.11','',('GCCcore','12.3.0')),
+    ('Mash', '2.3','',('GCC','12.3.0')),
+    ('tqdm', '4.66.1','',('GCCcore','12.3.0')),
+    ('skani','0.3.1','',('GCCcore','12.3.0')),
+]
+
+use_pip = True
+sanity_pip_check = True
+
+exts_list = [
+    ('pydantic-core', '2.6.3', {
+        'source_tmpl':'pydantic_core-2.6.3-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl',
+        'checksums': ['1ce8c84051fa292a5dc54018a40e2a1926fd17980a9422c973e3ebea017aa8da'],
+        'modulename':'pydantic_core',
+    }),
+    ('pydantic', '1.10.13', {
+	'source_tmpl':'%(name)s-%(version)s-py3-none-any.whl',
+        'checksums': ['b87326822e71bd5f313e7d3bfdc77ac3247035ac10b0c0618bd99dcf95b1e687'],
+	'modulename':'pydantic',
+    }),
+    (name, version, {
+        'modulename': 'gtdbtk',
+        'source_tmpl': 'gtdbtk-%(version)s.tar.gz',
+        'source_urls': ['https://pypi.python.org/packages/source/g/gtdbtk'],
+        'checksums': ['3b4a9622dcad5404678176c6776061aca3f478f5910999407df3fc7cc207370e'],
+    }),
+]
+
+modextravars = {
+                'GTDBTK_DATA_PATH':'/well/kir/projects/mirror/GTDB-Tk/release226',
+               }
+
+sanity_check_paths = {
+    'files': ['bin/gtdbtk'],
+    'dirs': ['lib/python%(pyshortver)s/site-packages'],
+}
+
+moduleclass = 'bio'
