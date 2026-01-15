@@ -1,0 +1,40 @@
+#easyblock = 'ConfigureMake'
+
+name = 'Rust'
+version = '1.92.0'
+
+homepage = 'https://www.rust-lang.org'
+description = """Systems programming language that runs blazingly fast, prevents segfaults,
+ and guarantees thread safety."""
+
+toolchain = {'name': 'GCCcore', 'version': '12.3.0'}
+
+source_urls = ['https://static.rust-lang.org/dist/']
+sources = ['rustc-%(version)s-src.tar.gz']
+checksums = ['9e0d2ca75c7e275fdc758255bf4b03afb3d65d1543602746907c933b6901c3b8']
+
+builddependencies = [
+    ('Python','3.11.3'),
+    ('CMake', '3.31.8', '', SYSTEM),
+    ('Ninja', '1.11.1'),
+    ('patchelf','0.18.0'),
+]
+
+dependencies = [
+    ('cURL','8.0.1'),
+    ('OpenSSL', '1.1', '', SYSTEM),
+]
+
+#configopts = "--enable-extended --sysconfdir=%(installdir)s/etc"
+
+sanity_check_paths = {
+    'files': ['bin/cargo', 'bin/rustc', 'bin/rustdoc'],
+    'dirs': ['lib/rustlib', 'share/doc', 'share/man'],
+}
+
+sanity_check_commands = [
+                          "cargo --version",
+                          "rustc --version"
+                        ]
+
+moduleclass = 'lang'
