@@ -38,6 +38,10 @@ exts_list = [
     }),
 ]
 
+modextravars = {
+                'GTDBTK_DATA_PATH':'/gpfs3/well/kir/projects/mirror/GTDB-Tk/release214',
+               }
+
 sanity_check_paths = {
     'files': ['bin/gtdbtk'],
     'dirs': ['lib/python%(pyshortver)s/site-packages'],
