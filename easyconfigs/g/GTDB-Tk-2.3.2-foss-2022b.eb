@@ -13,17 +13,17 @@ description = "A toolkit for assigning objective taxonomic classifications to ba
 toolchain = {'name': 'foss', 'version': '2022b'}
 
 dependencies = [
-    ('Python', '3.10.8'),
-    ('DendroPy', '4.5.2'),
-    ('matplotlib', '3.7.0'),
-    ('prodigal', '2.6.3'),
-    ('HMMER', '3.3.2'),
+    ('Python', '3.10.8','',('GCCcore','12.2.0')),
+    ('DendroPy', '4.5.2','',('GCCcore','12.2.0')),
+    ('matplotlib', '3.7.0','',('gfbf','2022b')),
+    ('prodigal', '2.6.3','',('GCCcore','12.2.0')),
+    ('HMMER', '3.3.2','',('gompi','2022b')),
     ('pplacer', '1.1.alpha19', '', SYSTEM),
-    ('FastANI', '1.33'),
-    ('FastTree', '2.1.11'),
-    ('Mash', '2.3'),
-    ('tqdm', '4.64.1'),
-    ('pydantic', '1.10.4'),
+    ('FastANI', '1.33','',('GCC','12.2.0')),
+    ('FastTree', '2.1.11','',('GCCcore','12.2.0')),
+    ('Mash', '2.3','',('GCC','12.2.0')),
+    ('tqdm', '4.64.1','',('GCCcore','12.2.0')),
+    ('pydantic', '1.10.4','',('GCCcore','12.2.0')),
 ]
 
 use_pip = True
