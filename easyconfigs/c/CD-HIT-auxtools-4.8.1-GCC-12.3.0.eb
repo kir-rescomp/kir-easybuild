@@ -19,8 +19,8 @@ source_urls = ['https://github.com/kir-rescomp/kir-easybuild/releases/download/0
 sources = ['%(namelower)s.tar.gz']
 
 dependencies = [
-    ('Perl', '5.36.1'),
-    ('zlib', '1.2.12'),
+    ('Perl', '5.36.1','',('GCCcore','12.3.0')),
+    ('zlib', '1.2.12','',('GCCcore','12.3.0')),
 ]
 
 # make sure compilation flags are passed down (e.g. to enable OpenMP)
