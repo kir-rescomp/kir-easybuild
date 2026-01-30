@@ -14,7 +14,9 @@ description = """ Auxilary tools for CD-HIT, a very widely used program for clus
 toolchain = {'name': 'GCC', 'version': '12.3.0'}
 toolchainopts = {'openmp': True}
 
-sources = ["/users/kir-software/kir-software/cd-hit-auxtools.tar.gz"]
+
+source_urls = ['https://github.com/kir-rescomp/kir-easybuild/releases/download/0.1']
+sources = ['%(namelower)s.tar.gz']
 
 dependencies = [
     ('Perl', '5.36.1'),
