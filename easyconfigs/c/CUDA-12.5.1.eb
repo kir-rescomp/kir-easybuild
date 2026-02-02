@@ -16,7 +16,7 @@ sources = ['%%(namelower)s_%%(version)s_%s_linux.run' % local_nv_version]
 checksums = [
     {
         '%%(namelower)s_%%(version)s_%s_linux.run' % local_nv_version:
-            '8496c72b16fee61889f9281449b5d633d0b358b46579175c275d85c9205fe953',
+            'b5e0a779e089c86610051141c4cf498beef431858ec63398107391727ecbdb04',
     }
 ]
 
