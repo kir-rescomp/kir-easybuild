@@ -21,6 +21,13 @@ builddependencies = [
     ('Miniforge3', '24.1.2-0'),
 ]
 
+# This is to avoid conda using /users/kir-software to cache pkgs
+preinstallopts = """
+export CONDA_PKGS_DIRS="%(builddir)s/conda_pkgs" && 
+export CONDA_ENVS_PATH="%(builddir)s/conda_envs" && 
+"""
+
+prebuildopts = 'CONDA_PKGS_DIRS="%(builddir)s/conda_pkgs" CONDA_ENVS_PATH="%(builddir)s/conda_envs" '
 
 sanity_check_commands = [
     "python -c 'from picrust2.default import default_tables_bac, default_tables_arc'",
@@ -30,7 +37,7 @@ sanity_check_commands = [
 
 sanity_check_paths = {
     'files': ['bin/picrust2_pipeline.py'],
-    'dirs': ['lib/python%(pyshortver)s/site-packages/picrust2/default_files'],
+    'dirs': [],
 }
 
 moduleclass = 'bio'
