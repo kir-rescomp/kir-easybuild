@@ -1,0 +1,49 @@
+easyblock = 'Binary'
+
+name = "Nextflow"
+version = "25.10.4"
+
+homepage = 'https://www.nextflow.io/'
+description = """Nextflow is a reactive workflow framework and a programming DSL
+ that eases writing computational pipelines with complex data"""
+
+toolchain = SYSTEM
+
+source_urls = ['https://github.com/nextflow-io/nextflow/releases/download/v%(version)s/']
+sources = ['%(namelower)s-%(version)s-dist']
+checksums = ['60db869a7618783e3ee60183a2b0c6c50ffc67221eabec60800b904991786aaa']
+
+dependencies = [
+    ('Java', '17.0.6', '', SYSTEM),
+    ('Python', '.3.11.9', '-bare', SYSTEM),
+]
+
+builddependencies = [('SQLite','3.51.1','',SYSTEM),]
+
+install_cmd = "[ -d %(builddir)s/bin ] || mkdir -p %(installdir)s/bin &&"
+install_cmd += "cp %(builddir)s/nextflow-%(version)s-dist %(installdir)s/bin &&"
+install_cmd += "cd %(installdir)s/bin && ln -s nextflow-%(version)s-dist nextflow &&"
+install_cmd += "chmod +x %(installdir)s/bin/nextflow-%(version)s-dist"
+
+postinstallcmds = [
+    "pip install --prefix=%(installdir)s nf-core",
+]
+
+# Prepend nf-core's bin and lib to the module environment
+modextrapaths = {
+    'PATH': 'bin',
+    'PYTHONPATH': 'lib/python3.11/site-packages',
+}
+
+sanity_check_paths = {
+    'files': ['bin/nextflow-%(version)s-dist', 'bin/nextflow', 'bin/nf-core'],
+    'dirs': ['lib/python3.11/site-packages/nf_core'],
+}
+
+sanity_check_commands = [
+    "nextflow -v",
+    "nextflow help",
+    "nf-core --version",
+]
+
+moduleclass = 'tools'
