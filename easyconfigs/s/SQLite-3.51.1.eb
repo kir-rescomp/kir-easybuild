@@ -16,10 +16,9 @@ checksums = ['4f2445cd70479724d32ad015ec7fd37fbb6f6130013bd4bfbc80c32beb42b7e0']
 builddependencies = [
     ('binutils', '2.40'),
 ]
-dependencies = [
-    ('libreadline', ''),
-    ('Tcl', '9.0.3'),
-]
+
+
+hidden = True
 
 # Explicitly unset LIBS, as set -lm -lpthread interfere with SQLite configure
 # check, causing these libs to not show up in pkgconf file.
