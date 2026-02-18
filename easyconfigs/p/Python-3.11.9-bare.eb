@@ -15,9 +15,10 @@ optimized = False  # Fixed a compile-time "Could not import runpy module"
  
 builddependencies = [
                         ('libffi','3.4.5','',SYSTEM),
+                        ('SQLite','.3.51.1','',SYSTEM)
                     ]
 
-preconfigopts = 'LDFLAGS="-L$EBROOTLIBFFI/lib64" CPPFLAGS="-I$EBROOTLIBFFI/include"'
+preconfigopts = 'LDFLAGS="-L$EBROOTLIBFFI/lib64 -L$EBROOTSQLITE/lib" CPPFLAGS="-I$EBROOTLIBFFI/include -I$EBROOTSQLITE/include"'
 configopts = '--with-system-ffi --without-readline'
 
 exts_default_options = {
