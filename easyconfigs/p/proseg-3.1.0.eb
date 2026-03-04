@@ -1,0 +1,46 @@
+# Author: Dinindu Senanayake
+# Kennedy Institute of Rheumatology, University of Oxford
+
+easyblock = 'Binary'
+
+name = 'proseg'
+version = '3.1.0'
+
+homepage = 'https://github.com/dcjones/proseg'
+description = """Proseg (probabilistic segmentation) is a cell segmentation method for in situ spatial
+                  transcriptomics. Xenium, CosMx, and MERSCOPE platforms are currently supported."""
+
+toolchain = {'name': 'GCCcore', 'version': '12.3.0'}
+
+source_urls = ['https://github.com/dcjones/%(name)s/archive/refs/tags/']
+sources = ['v%(version)s.tar.gz']
+checksums = ['3078197bc9260c105d218d8e0aa66d37b222d94dce2cb7abed3812823d5421b7']  # fill in with: sha256sum v3.1.0.tar.gz
+
+builddependencies = [
+    ('Rust', '1.92.0','',('GCCcore','12.3.0')),
+    ('binutils', '2.40','',('GCCcore','12.3.0')),    
+]
+
+dependencies = [
+    ('zstd', '1.5.5','',('GCCcore','12.3.0')),
+    ('lz4', '1.9.4','',('GCCcore','12.3.0')),
+]
+
+extract_sources = True
+
+install_cmd = (
+    'ZSTD_SYS_USE_PKG_CONFIG=1 '
+    'CFLAGS="-g -gdwarf-2" '
+    'CXXFLAGS="-g -gdwarf-2" '
+    'cargo build --release && '
+    'cargo install --root %(installdir)s --path .'
+)
+
+sanity_check_paths = {
+    'files': ['bin/proseg'],
+    'dirs': [],
+}
+
+sanity_check_commands = ['proseg --help']
+
+moduleclass = 'bio'
