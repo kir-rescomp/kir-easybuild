@@ -13,7 +13,7 @@ toolchain = SYSTEM
 
 source_urls = ['https://services.gradle.org/distributions']
 sources = ['gradle-%(version)s-all.zip']
-checksums = ['85719317abd2112f021d4f41f09ec370534ba288432065f4b477b6a3b652910d']
+checksums = ['708d2c6ecc97ca9a11838ef64a6c2301151b8dd10387e22dc1a12c30557cab5b']
 
 dependencies = [
                 ('Java', '21.0.10'),    
