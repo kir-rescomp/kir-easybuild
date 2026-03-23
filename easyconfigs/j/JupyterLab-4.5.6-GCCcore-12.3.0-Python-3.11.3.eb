@@ -1,0 +1,95 @@
+easyblock = 'PythonBundle'
+
+name = 'JupyterLab'
+version = '4.5.6'
+
+homepage = 'https://jupyter.org/'
+description = """JupyterLab is the next-generation user interface for Project Jupyter offering all the
+ familiar building blocks of the classic Jupyter Notebook (notebook, terminal, text editor, file browser,
+ rich outputs, etc.) in a flexible and powerful user interface. Includes Poetry, PDM, and KIR
+ Jupyter helpers."""
+
+toolchain = {'name': 'GCCcore', 'version': '12.3.0'}
+
+builddependencies = [
+    ('binutils', '2.40', '', SYSTEM),
+]
+
+dependencies = [
+    ('Python', '3.11.3'),
+]
+
+# No exts_list — pip handles full dependency resolution inside the venv
+exts_list = []
+use_pip = True
+
+postinstallcmds = [
+    # Create isolated venv inside the install prefix
+    'python -m venv %(installdir)s/venv',
+
+    # Upgrade pip/setuptools inside venv first to avoid any old resolver behaviour
+    '%(installdir)s/venv/bin/pip install --no-cache-dir --upgrade pip setuptools wheel',
+
+    # Install everything in one shot — pip resolves the full dep tree
+    '%(installdir)s/venv/bin/pip install --no-cache-dir '
+        'jupyterlab==4.5.6 '
+        'notebook==7.5.5 '
+        'ipykernel '
+        'ipywidgets '
+        'poetry==2.3.2 '
+        'pdm==2.26.6 '
+        'defopt==7.0.0 '
+        'https://github.com/kir-rescomp/kir-jupyter-helper/archive/refs/tags/v0.2.0.tar.gz',
+
+    # Register the venv's Python as a Jupyter kernel so it shows up in the launcher
+    '%(installdir)s/venv/bin/python -m ipykernel install '
+        '--prefix=%(installdir)s '
+        '--name="bmrc-jupyterlab" '
+        '--display-name="Python 3.11 (BMRC JupyterLab)"',
+]
+
+sanity_check_paths = {
+    'files': [
+        'venv/bin/jupyter-lab',
+        'venv/bin/jupyter-notebook',
+        'venv/bin/jupyter-nbconvert',
+        'venv/bin/jupyter-kernelspec',
+        'venv/bin/ipython',
+        'venv/bin/poetry',
+        'venv/bin/pdm',
+    ],
+    'dirs': [
+        'venv/lib/python3.11/site-packages/jupyterlab',
+        'venv/lib/python3.11/site-packages/notebook',
+        'venv/lib/python3.11/site-packages/IPython',
+        'share/jupyter/kernels/bmrc-jupyterlab',
+    ],
+}
+
+sanity_check_commands = [
+    'jupyter lab --help',
+    'jupyter kernelspec list',
+    'poetry --version',
+    'pdm --version',
+]
+
+# venv/bin on PATH means ALL venv binaries are available without manual symlinking
+modextrapaths = {
+    'EB_ENV_JUPYTER_ROOT': '',
+    'PATH': 'venv/bin',
+    'PYTHONPATH': 'venv/lib/python3.11/site-packages', 
+    'JUPYTER_PATH': 'venv/share/jupyter',   # <-- add this
+}
+
+modextravars = {
+    # Point to where pip actually installed the assets — inside the venv
+    'JUPYTERLAB_DIR':            '%(installdir)s/venv/share/jupyter/lab',
+    'JUPYTERLAB_SETTINGS_DIR':   '$HOME/.jupyter/lab/user-settings',
+    'JUPYTERLAB_WORKSPACES_DIR': '$HOME/.jupyter/lab/workspaces',
+    'VIRTUAL_ENV':               '%(installdir)s/venv',
+    'POETRY_VIRTUALENVS_CREATE': 'false',
+    'PDM_IN_ENV':                '1',
+}
+
+
+moduleclass = 'tools'
