@@ -1,0 +1,32 @@
+# Author : Dinindu Senanayake, KIR 
+
+easyblock = 'Binary'
+
+name = 'Pixi'
+version = '0.66.0'
+
+homepage = 'https://pixi.prefix.dev/latest/'
+description = """Pixi is a cross-platform, multi-language package manager and workflow tool built on the
+foundation of the conda ecosystem."""
+
+toolchain = SYSTEM
+
+source_urls = ['https://github.com/prefix-dev/pixi/releases/download/v%(version)s/']
+sources = ['pixi-x86_64-unknown-linux-musl.tar.gz']
+
+extract_sources = True
+
+postinstallcmds = [
+    'mkdir -p %(installdir)s/bin',
+        'find %(builddir)s -name pixi -type f -exec install -m 755 {} %(installdir)s/bin/pixi \;',
+        
+]
+
+sanity_check_paths = {
+    'files': ['bin/pixi'],
+    'dirs': [],
+}
+
+sanity_check_commands = ['pixi --help']
+
+moduleclass = 'lang'
