@@ -39,7 +39,7 @@ postinstallcmds = [
         'poetry==2.3.2 '
         'pdm==2.26.6 '
         'defopt==7.0.0 '
-        'https://github.com/kir-rescomp/kir-jupyter-helper/archive/refs/tags/v0.2.0.tar.gz',
+        'https://github.com/kir-rescomp/kir-jupyter-helper/archive/refs/tags/v0.3.0.tar.gz',
 
     # Register the venv's Python as a Jupyter kernel so it shows up in the launcher
     '%(installdir)s/venv/bin/python -m ipykernel install '
