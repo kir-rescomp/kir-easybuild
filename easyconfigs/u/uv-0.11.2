@@ -1,0 +1,26 @@
+easyblock = 'Binary'
+
+name = 'uv'
+version = '0.11.2'
+
+homepage = 'https://docs.astral.sh/uv/'
+description = """An extremely fast Python package and project manager, written in Rust."""
+
+toolchain = SYSTEM
+
+source_urls = ['https://github.com/astral-sh/uv/releases/download/%(version)s']
+sources = ['%(name)s-x86_64-unknown-linux-gnu.tar.gz']
+checksums = ['7ac2ca0449c8d68dae9b99e635cd3bc9b22a4cb1de64b7c43716398447d42981']
+
+extract_sources = True
+
+install_cmd = "mkdir -p %(installdir)s/bin && cp -a * %(installdir)s/bin"
+
+sanity_check_paths = {
+    'files': ['bin/uv', 'bin/uvx'],
+    'dirs': [],
+}
+
+sanity_check_commands = ['uv --version']
+
+moduleclass = 'bio'
