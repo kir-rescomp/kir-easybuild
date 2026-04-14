@@ -1,0 +1,70 @@
+easyblock = 'PythonPackage'
+
+name = 'ANARCI'
+version = '2024.09.18'  # Update to match the commit date you snapshot
+
+homepage = 'https://github.com/oxpig/ANARCI'
+description = """Antibody Numbering and Antigen Receptor ClassIfication"""
+
+toolchain = {'name': 'foss', 'version': '2023a'}
+
+# GitHub does not provide versioned tarballs for this repo — pin to a commit hash.
+# Replace <COMMIT> below with the full SHA from:
+#   git ls-remote https://github.com/oxpig/ANARCI HEAD
+# and update checksums accordingly.
+source_urls = ['https://github.com/oxpig/ANARCI/archive/']
+sources = ['master.tar.gz']
+checksums = ['d35374694a8e159e4e4f57fb1b4a33485034e3bb0639980d44d21ba9c54148e8']  # replace with sha256 of the tarball: sha256sum master.tar.gz
+
+
+dependencies = [
+    ('Python', '3.11.3','',('GCCcore','12.3.0')),
+    ('Biopython', '1.83'),
+    # HMMER must be in PATH during install (setup.py calls hmmbuild via RUN_pipeline.sh)
+    # and also at runtime (ANARCI calls hmmscan for every numbering job).
+    ('HMMER', '3.4','',('gompi','2023a')),
+]
+
+# ANARCI uses old distutils-style setup.py; do not use pip
+use_pip = False
+download_dep_fail = True
+sanity_pip_check = False
+
+# Patches applied to setup.py before running it (via sed in preinstallopts):
+#
+#   Fix 1 — ANARCI_BIN
+#     Original: ANARCI_BIN = sys.executable.split('python')[0]
+#     Resolves to the Python module's bin/, not the install prefix.
+#     → Override to %(installdir)s/bin/
+#
+#   Fix 2 — ANARCI_LOC
+#     Original: ANARCI_LOC = os.path.join(site.getsitepackages()[0], 'anarci')
+#     Resolves to the Python module's site-packages, not the install prefix.
+#     → Override to %(installdir)s/lib/python%(pyshortver)s/site-packages/anarci
+#
+# Also:
+#   - chmod +x bin/muscle         bundled Linux muscle binary must be executable
+#   - export PATH with bin/       so RUN_pipeline.sh finds 'muscle' after cd build_pipeline
+#   - mkdir -p %(installdir)s/bin  distutils won't auto-create it (scripts= is commented out
+#                                  in setup()), but shutil.copy into it happens unconditionally
+preinstallopts = (
+    'chmod +x bin/muscle && '
+    'export PATH="$(pwd)/bin:$PATH" && '
+    "sed -i 's|ANARCI_BIN = sys.executable.split.*|ANARCI_BIN = \"%(installdir)s/bin/\"|g' setup.py && "
+    "sed -i 's|ANARCI_LOC = os.path.join(site.getsitepackages.*|ANARCI_LOC = \"%(installdir)s/lib/python%(pyshortver)s/site-packages/anarci\"|g' setup.py && "
+    'mkdir -p %(installdir)s/bin && '
+)
+
+sanity_check_paths = {
+    'files': ['bin/ANARCI'],
+    'dirs': ['lib/python%(pyshortver)s/site-packages/anarci'],
+}
+
+sanity_check_commands = [
+    'ANARCI --help',
+    # Quick functional smoke-test: number a known VH sequence
+    ('ANARCI -i EVQLQQSGAEVVRSGASVKLSCTASGFNIKDYYIHWVKQRPEKGLEWIGWIDPEIGDTEYVPKFQGKAM'
+     'TMADTSSNTAYLQLSSLTSEDTAVYYCNAGHDYDRGRFPYWGQGTLVTVSA -s imgt'),
+]
+
+moduleclass = 'bio'
