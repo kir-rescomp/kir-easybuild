@@ -19,29 +19,25 @@ dependencies = [
     ('Python', '3.11.3'),
 ]
 
-# No exts_list — pip handles full dependency resolution inside the venv
 exts_list = []
 use_pip = True
 
 postinstallcmds = [
-    # Create isolated venv inside the install prefix
     'python -m venv %(installdir)s/venv',
 
-    # Upgrade pip/setuptools inside venv first to avoid any old resolver behaviour
     '%(installdir)s/venv/bin/pip install --no-cache-dir --upgrade pip setuptools wheel',
 
-    # Install everything in one shot — pip resolves the full dep tree
     '%(installdir)s/venv/bin/pip install --no-cache-dir '
         'jupyterlab==4.5.6 '
         'notebook==7.5.5 '
         'ipykernel '
         'ipywidgets '
+        '"jsonschema>=4.18.0,<4.21.0" '    # quoted to prevent < being shell-redirected
         'poetry==2.3.2 '
         'pdm==2.26.6 '
         'defopt==7.0.0 '
         'https://github.com/kir-rescomp/kir-jupyter-helper/archive/refs/tags/v0.3.0.tar.gz',
 
-    # Register the venv's Python as a Jupyter kernel so it shows up in the launcher
     '%(installdir)s/venv/bin/python -m ipykernel install '
         '--prefix=%(installdir)s '
         '--name="bmrc-jupyterlab" '
@@ -73,16 +69,17 @@ sanity_check_commands = [
     'pdm --version',
 ]
 
-# venv/bin on PATH means ALL venv binaries are available without manual symlinking
 modextrapaths = {
     'EB_ENV_JUPYTER_ROOT': '',
     'PATH': 'venv/bin',
-    'PYTHONPATH': 'venv/lib/python3.11/site-packages', 
-    'JUPYTER_PATH': 'venv/share/jupyter',   # <-- add this
+    # PYTHONPATH intentionally omitted — the venv python already knows its own
+    # site-packages, and exporting it here contaminates every other Python
+    # process that loads this module (kernels, user venvs, etc.), which causes
+    # exactly the kind of package version conflicts seen with jsonschema.
+    'JUPYTER_PATH': 'venv/share/jupyter',
 }
 
 modextravars = {
-    # Point to where pip actually installed the assets — inside the venv
     'JUPYTERLAB_DIR':            '%(installdir)s/venv/share/jupyter/lab',
     'JUPYTERLAB_SETTINGS_DIR':   '$HOME/.jupyter/lab/user-settings',
     'JUPYTERLAB_WORKSPACES_DIR': '$HOME/.jupyter/lab/workspaces',
@@ -90,6 +87,5 @@ modextravars = {
     'POETRY_VIRTUALENVS_CREATE': 'false',
     'PDM_IN_ENV':                '1',
 }
-
 
 moduleclass = 'tools'
