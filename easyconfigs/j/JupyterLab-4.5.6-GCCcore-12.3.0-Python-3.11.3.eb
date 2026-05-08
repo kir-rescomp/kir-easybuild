@@ -17,6 +17,7 @@ builddependencies = [
 
 dependencies = [
     ('Python', '3.11.3'),
+    ('nodejs','18.17.1'),
 ]
 
 exts_list = []
