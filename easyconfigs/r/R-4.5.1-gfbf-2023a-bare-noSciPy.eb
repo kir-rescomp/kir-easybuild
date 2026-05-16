@@ -50,7 +50,7 @@ dependencies = [
     ('ImageMagick', '7.1.1-15', '', ('GCCcore', '12.3.0')),
     ('GLPK', '5.0', '', ('GCCcore', '12.3.0')),
     ('nodejs', '18.17.1', '', ('GCCcore', '12.3.0')),
-    ('GDAL', '3.7.1', '', ('foss', '2023a')),  # Note: check if needs versionsuffix
+#    ('GDAL', '3.7.1', '', ('foss', '2023a')),  # Note: check if needs versionsuffix - Dropping GDAL altogether for the moment
     ('MPFR', '4.2.0', '', ('GCCcore', '12.3.0')),
     ('libgit2', '1.7.1', '', ('GCCcore', '12.3.0')),
     ('OpenSSL', '1.1', '', SYSTEM),
