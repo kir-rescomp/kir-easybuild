@@ -1,0 +1,51 @@
+easyblock = 'PythonBundle'
+
+name = 'hostile'
+version = '2.0.2'
+
+homepage = 'https://github.com/bede/hostile'
+description = """Hostile is a fast, accurate host read removal tool for metagenomic short-read and
+long-read sequencing data. Supports Bowtie2 (short reads) and Minimap2 (long reads) backends."""
+
+toolchain = {'name': 'GCC', 'version': '12.3.0'}
+
+dependencies = [
+    ('Python',   '3.11.3','',('GCCcore','12.3.0')),
+    ('minimap2', '2.31','',('GCCcore','12.3.0')),
+    ('SAMtools', '1.18'),
+    ('BEDTools', '2.31.0'),
+    ('Bowtie2',  '2.5.5','',('GCCcore','12.3.0')),
+]
+
+# No exts_list — pip handles full dependency resolution inside the venv
+exts_list = []
+use_pip = True
+
+postinstallcmds = [
+    # Create an isolated venv inside the install prefix
+    'python -m venv %(installdir)s/venv',
+
+    # Upgrade pip/setuptools first so it can handle modern pyproject.toml features
+    '%(installdir)s/venv/bin/pip install --no-cache-dir --upgrade pip setuptools wheel',
+
+    # Install hostile and its full Python dependency closure in one shot.
+    # pip resolves the dep tree; runtime tools (minimap2, samtools, etc.)
+    # come in via the module dependencies above.
+    '%(installdir)s/venv/bin/pip install --no-cache-dir hostile==2.0.2',
+]
+
+sanity_check_paths = {
+    'files': ['venv/bin/hostile'],
+    'dirs':  ['venv/lib/python3.11/site-packages/hostile'],
+}
+
+sanity_check_commands = [
+    'hostile --help',
+    'python -c "import hostile; print(hostile.__version__)"',
+]
+
+modextrapaths = {
+    'PATH': 'venv/bin',
+}
+
+moduleclass = 'bio'
