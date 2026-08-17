@@ -37,6 +37,10 @@ export EASYBUILD_TMPDIR="${TMPDIR:-/tmp}"
 export EASYBUILD_USE_EXISTING_MODULES=1
 export EASYBUILD_ALLOW_LOADED_MODULES="EasyBuild"
 
+# Upgrading to foss/2025b looks for blis.py easyblock. Easiest option is to create a custom directory and add the missing file/s to it
+# current environment variable expect the custom-easyblocks directory to be in the current working directory
+export EASYBUILD_INCLUDE_EASYBLOCKS="${PWD}/custom-easyblocks/*.py"
+
 # Job configuration
 export EASYBUILD_JOB_BACKEND="Slurm"
 export EASYBUILD_MODULE_SYNTAX="Lua"  # or "Tcl" to match your config file
