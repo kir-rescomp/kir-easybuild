@@ -14,11 +14,11 @@ source_urls = ['https://github.com/openssl/openssl/releases/download/%(namelower
 sources = ['%(namelower)s-%(version)s.tar.gz']
 checksums = ['617e29af8e421f46649484a4937e48c685e47f46488167c982f88bc4ec1d522f']
 
-dependencies = [('zlib', '1.2.13')]
+dependencies = [('zlib', '1.3.1')]
 
 builddependencies = [
-    ('Perl', '5.36.1','',('GCCcore','12.3.0')),
-    ('binutils', '2.40','',SYSTEM),
+    ('Perl', '5.38.0'),
+    ('binutils', '2.40'),
 ]
 
 # This easyconfig will wrap the OpenSSL installation in the host system.
