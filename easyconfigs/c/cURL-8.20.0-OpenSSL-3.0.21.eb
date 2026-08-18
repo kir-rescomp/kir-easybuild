@@ -1,0 +1,46 @@
+easyblock = 'ConfigureMake'
+
+name = 'cURL'
+version = '8.20.0'
+
+versionsuffix = '-OpenSSL-3.0.21'
+
+homepage = 'https://curl.haxx.se'
+
+description = """
+ libcurl is a free and easy-to-use client-side URL transfer library,
+ supporting DICT, FILE, FTP, FTPS, Gopher, HTTP, HTTPS, IMAP, IMAPS, LDAP,
+ LDAPS, POP3, POP3S, RTMP, RTSP, SCP, SFTP, SMTP, SMTPS, Telnet and TFTP.
+ libcurl supports SSL certificates, HTTP POST, HTTP PUT, FTP uploading, HTTP
+ form based upload, proxies, cookies, user+password authentication (Basic,
+ Digest, NTLM, Negotiate, Kerberos), file transfer resume, http proxy tunneling
+ and more.
+"""
+
+toolchain = SYSTEM
+
+source_urls = ['https://curl.haxx.se/download/']
+sources = [SOURCELOWER_TAR_GZ]
+checksums = ['fc5819cad3f9f5482669adcdc49a782c15f36d2a0715b395b06d9173593d2dc0']
+
+builddependencies = [
+    ('binutils', '2.44'),
+    ('libpsl','0.21.5','',('GCCcore','14.3.0')),
+]
+
+dependencies = [
+    ('zlib', '1.3.1'),
+    ('OpenSSL', '3.0.21'),
+]
+
+configopts = '--with-zlib '
+configopts += '--with-ssl=$EBROOTOPENSSL '
+
+modextravars = {'CURL_INCLUDES': '%(installdir)s/include'}
+
+sanity_check_paths = {
+    'files': ['bin/curl', 'lib/libcurl.a', 'lib/libcurl.%s' % SHLIB_EXT],
+    'dirs': ['lib/pkgconfig', 'include/curl'],
+}
+
+moduleclass = 'tools'
