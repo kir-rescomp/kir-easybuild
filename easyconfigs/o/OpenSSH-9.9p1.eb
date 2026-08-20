@@ -1,0 +1,33 @@
+# OpenSSH-9.9p1-GCCcore-13.3.0.eb
+easyblock = 'ConfigureMake'
+
+name = 'OpenSSH'
+version = '9.9p1'
+
+homepage = 'https://www.openssh.com/portable.html'
+description = """OpenSSH is a complete open-source implementation of the SSH protocol."""
+
+#toolchain = {'name': 'GCCcore', 'version': '12.3.0'}
+toolchain = SYSTEM
+
+source_urls = ['https://cdn.openbsd.org/pub/OpenBSD/OpenSSH/portable/']
+sources = ['%(namelower)s-%(version)s.tar.gz']
+
+builddependencies = [('binutils', '2.40')]
+
+dependencies = [
+    ('OpenSSL', '3.0.21'),  # use your existing module
+    ('zlib', '1.3.1'),
+]
+
+configopts = '--with-ssl-dir=$EBROOTOPENSSL --with-zlib=$EBROOTZLIB --without-pam'
+
+# build only the client side, skip server install if you don't want sshd
+buildopts = ''
+
+sanity_check_paths = {
+    'files': ['bin/ssh', 'bin/scp', 'bin/ssh-keygen'],
+    'dirs': [],
+}
+
+moduleclass = 'tools'
