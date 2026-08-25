@@ -1,0 +1,48 @@
+easyblock = 'MakeCp'
+
+name = 'HISAT2'
+version = '2.2.3'
+
+homepage = 'https://daehwankimlab.github.io/hisat2'
+description = """HISAT2 is a fast and sensitive alignment program for mapping next-generation sequencing reads
+ (both DNA and RNA) against the general human population (as well as against a single reference genome)."""
+
+toolchain = {'name': 'gompi', 'version': '2023a'}
+
+sources = [{
+    'source_urls': ['https://github.com/DaehwanKimLab/hisat2/archive/refs/tags'],
+    'filename': 'v%(version)s.zip',
+}]
+patches = [
+    'hisat2-libname-fix.patch',
+]
+checksums = [
+    {'v%(version)s.zip': 'a2987412630ede3b0280aa73f17a7337ed5185d0db33580ac0c825c6f23e62b3'},
+    {'hisat2-libname-fix.patch': '8aa91d1dd6455b96c10ce48827f8313b006241d815fbe6382422dbae3b610726'},
+]
+
+dependencies = [
+    ('ncbi-vdb', '3.0.10'),
+    ('SRA-Toolkit', '3.0.10'),  # provides NGS
+]
+
+buildopts = 'CC="$CC" CPP="$CXX" RELEASE_FLAGS="$CFLAGS" '
+buildopts += 'USE_SRA=1 NCBI_NGS_DIR="$EBROOTSRAMINTOOLKIT" NCBI_VDB_DIR="$EBROOTNCBIMINVDB" '
+# add new libncbi-ngs from the NGS merge into SRA-Toolkit v3
+buildopts += 'SRA_LIB="-lncbi-ngs-c++ -lngs-c++ -lncbi-ngs -lncbi-vdb -ldl"'
+
+local_executables = ['hisat2', 'hisat2-align-l', 'hisat2-align-s', 'hisat2-build', 'hisat2-build-l', 'hisat2-build-s',
+                     'hisat2-inspect', 'hisat2-inspect-s', 'hisat2-inspect-l', 'hisat2-repeat', 'extract_exons.py',
+                     'extract_splice_sites.py', 'hisat2_extract_exons.py', 'hisat2_extract_snps_haplotypes_UCSC.py',
+                     'hisat2_extract_snps_haplotypes_VCF.py', 'hisat2_extract_splice_sites.py',
+                     'hisat2_read_statistics.py', 'hisat2_simulate_reads.py']
+files_to_copy = [(local_executables, 'bin'), 'scripts', 'example']
+
+sanity_check_paths = {
+    'files': ['bin/%s' % x for x in local_executables],
+    'dirs': ['scripts', 'example'],
+}
+
+sanity_check_commands = ["hisat2 --help"]
+
+moduleclass = 'bio'
