@@ -1,0 +1,28 @@
+easyblock = 'Binary'
+
+name = 'ncbi-datasets'
+version = '18.37.0'
+
+homepage = 'https://www.ncbi.nlm.nih.gov/datasets/docs/v2/command-line-tools/download-and-install/'
+description = """A resource that lets you easily gather data from across NCBI databases"""
+
+toolchain = SYSTEM
+
+source_urls = ['https://github.com/ncbi/datasets/releases/download/v%(version)s']
+sources = ['linux-amd64.cli.package.zip']
+checksums = ['f553860753712e6628e4f0f45a1388f9ad27e6f9d5d07549d1c87cd208955f4b']
+
+extract_sources = True
+
+install_cmd = "mkdir -p %(installdir)s/bin && cp -a * %(installdir)s/bin"
+
+sanity_check_paths = {
+        'files': ['bin/datasets', 'bin/dataformat'],
+            'dirs': [],
+            
+}
+
+sanity_check_commands = ['datasets --version']
+
+moduleclass = 'bio'
+
