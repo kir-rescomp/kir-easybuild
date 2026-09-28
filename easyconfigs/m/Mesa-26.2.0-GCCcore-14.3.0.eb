@@ -29,6 +29,7 @@ builddependencies = [
     ('libxml2', '2.14.3'),
     ('expat', '2.7.1'),
     ('gettext', '0.25'),
+    ('PyYAML','6.0.2'),
 ]
 
 dependencies = [

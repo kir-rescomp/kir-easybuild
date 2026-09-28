@@ -4,24 +4,21 @@
 
 # Parse args
 sysname=${1:-skylake}  # Default to skylake if not specified
+tcgen=${2:-2025b}
 
 # Set up module path to include existing cluster modules and KIR modules
 export MODULEPATH="/apps/kir/eb/${sysname}/modules/all:\
+/apps/eb/el8/${tcgen}/${sysname}/modules/all:\
+/apps/eb/el8/2023a/${sysname}/modules/all:\
+/apps/eb/el8/common/modules/all:\
 /apps/eb/${sysname}/modules/all:\
 /apps/eb/dev/${sysname}/modules/all:\
-/apps/eb/2022b/${sysname}/modules/all:\
 /apps/eb/2023a/${sysname}/modules/all:\
+/apps/eb/2022b/${sysname}/modules/all:\
 /apps/eb/2020b/${sysname}/modules/all:\
 /apps/eb/el7/common/modules/all:\
 /etc/modulefiles:\
-/usr/share/modulefiles:\
-/apps/eb/el8/2023a/${sysname}/modules/all:\
-/apps/eb/el8/common/modules/all:\
-/apps/kir/eb/${sysname}/modules/all:\
-/apps/eb/${sysname}/modules/all:\
-/apps/eb/dev/${sysname}/modules/all:\
-/apps/eb/2022b/${sysname}/modules/all:\
-/apps/eb/2020b/${sysname}/modules/all"
+/usr/share/modulefiles"
 
 # Load EasyBuild if not already loaded
 if module list 2>&1 | grep -q 'EasyBuild'; then
@@ -64,7 +61,7 @@ if [[ "${USER}" == "kir-software" ]]; then
     export EASYBUILD_PACKAGEPATH="${EASYBUILD_PREFIX}/packages"
 
     # Robot paths: check local customizations first, then defaults, then installed
-    export EASYBUILD_ROBOT_PATHS="/apps/kir/eb/${sysname}/local:${EASYBUILD_REPOSITORYPATH}"
+    export EASYBUILD_ROBOT_PATHS="/apps/kir/eb/${sysname}/local:${EASYBUILD_REPOSITORYPATH}:/apps/eb/el8/${tcgen}/${sysname}/ebfiles_repo"
 
     # Build path (temporary, can be in /tmp or scratch)
     export EASYBUILD_BUILDPATH="${EASYBUILD_TMPDIR}/${USER}/easybuild/build"
@@ -85,7 +82,7 @@ else
 
     # Robot paths: check user's local first, then production installs, then defaults
     tcgen="2025b"
-    export EASYBUILD_ROBOT_PATHS="${EASYBUILD_PREFIX}/local:/apps/kir/eb/${sysname}/ebfiles_repo:/apps/eb/el8/${tcgen}/skylake/ebfiles_repo"
+    export EASYBUILD_ROBOT_PATHS="${EASYBUILD_PREFIX}/local:/apps/kir/eb/${sysname}/ebfiles_repo:/apps/eb/el8/${tcgen}/${sysname}/ebfiles_repo"
 
     # Build path in user's temp space
     export EASYBUILD_BUILDPATH="${EASYBUILD_TMPDIR}/${USER}/easybuild/build"
