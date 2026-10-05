@@ -15,15 +15,15 @@ checksums = ['4da6e61d2c0aac5f14a2e7e432cb5fcc269efe83da4293050ba7f03dff4e2cf4']
 
 builddependencies = [
     ('pkgconf', '2.4.3'),
-    ('Xvfb', '21.1.8'),
+    ('Xvfb', '21.1.18'),
     ('Autotools', '20250527'),
-    ('CMake', '4.0.3'),
 ]
 
 dependencies = [
+    ('CMake', '4.0.3'),
     ('X11', '20250608'),
-    ('Mesa', ''),
-    ('libGLU', ''),
+    ('Mesa', '26.2.0'),
+    ('libGLU', '9.0.3'),
     ('cairo', '1.18.4'),
     ('libreadline', '8.2'),
     ('ncurses', '6.5'),
@@ -37,23 +37,23 @@ dependencies = [
     ('LibTIFF', '4.7.0'),
     ('Java', '11', '', SYSTEM),
     ('Tk', '9.0.1'),
-    ('cURL', '8.20.0'),
+    ('cURL', '8.14.1'),
     ('libxml2', '2.14.3'),
     ('GMP', '6.3.0'),
     ('NLopt', '2.10.0'),
     ('FFTW', '3.3.10'),  # Note: GCC not GCCcore
     ('libsndfile', '1.2.2'),
     ('ICU', '77.1'),
-    ('HDF5', '1.14.6'),
+    ('HDF5', '1.14.6','',('gompi','2025b')),
     ('UDUNITS', '2.2.28'),
     ('GSL', '2.8'),  # Note: GCC not GCCcore
     ('ImageMagick', '7.1.2-7'),
     ('GLPK', '5.0'),
     ('nodejs', '22.17.1'),
-    ('GDAL', '3.11.3'),  # Note: check if needs versionsuffix - Dropping GDAL altogether for the moment
+    ('GDAL', '3.11.3','',('foss','2025b')),  # Note: check if needs versionsuffix - Dropping GDAL altogether for the moment
     ('MPFR', '4.2.2'),
     ('libgit2', '1.9.1'),
-    ('OpenSSL', '3.0.21'),
+    ('OpenSSL', '3','',SYSTEM),
     ('libwebp','1.5.0'), # this is needed for ragg which is a dependency for devtools
 ]
 
