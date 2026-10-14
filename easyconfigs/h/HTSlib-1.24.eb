@@ -1,7 +1,7 @@
 easyblock = 'ConfigureMake'
 
 name = 'HTSlib'
-version = '1.23.2'
+version = '1.24'
 
 homepage = 'https://www.htslib.org/'
 description = """A C library for reading/writing high-throughput sequencing data.
@@ -11,7 +11,7 @@ toolchain = {'name': 'GCC', 'version': '14.3.0'}
 
 source_urls = ['https://github.com/samtools/%(namelower)s/releases/download/%(version)s/']
 sources = [SOURCELOWER_TAR_BZ2]
-checksums = ['5a48fb36589744c38027f79344773c7040cb76b90a28de4ededf20d748dcfde3']
+checksums = ['28a8de191381c7a97a35675ceac76fa1ea95e7b678d6a2e9d600a7874e4077de']
 
 # cURL added for S3 support
 dependencies = [
