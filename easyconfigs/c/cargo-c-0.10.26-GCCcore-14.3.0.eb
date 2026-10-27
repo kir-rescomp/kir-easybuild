@@ -1,0 +1,32 @@
+easyblock = 'Binary'
+
+name = 'cargo-c'
+version = '0.10.26'
+
+homepage = 'https://github.com/lu-zero/cargo-c'
+description = """Applet for cargo to build and install C-ABI compatible dynamic and static
+                libraries"""
+
+toolchain = {'name': 'GCCcore', 'version': '14.3.0'}
+
+source_urls = ['https://github.com/lu-zero/cargo-c/archive/refs/tags/']
+sources = ['v%(version)s.tar.gz']
+checksums = ['57700786539a322a50f1848332e3465bf15efa5af2fd8b6113f36cbfce46c830']
+
+builddependencies = [
+    ('Rust', '1.99.0'),
+    ('CMake', '4.0.3'),
+    ('binutils','2.44'),
+]
+
+extract_sources = True
+
+install_cmd = "cargo build --release && cargo install --root %(installdir)s --path ."
+
+sanity_check_paths = {
+    'files': ['bin/cargo-cbuild'],
+    'dirs': [],
+}
+
+
+moduleclass = 'bio'
