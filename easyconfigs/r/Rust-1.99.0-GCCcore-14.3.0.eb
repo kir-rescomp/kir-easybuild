@@ -11,7 +11,7 @@ toolchain = {'name': 'GCCcore', 'version': '14.3.0'}
 
 source_urls = ['https://static.rust-lang.org/dist/']
 sources = ['rustc-%(version)s-src.tar.gz']
-checksums = ['e90a9eb153b2948afac840dbe9d77b64e376706f2864387ee7717f7450043b44']
+checksums = ['2035e4077b834a42ff8afd07f277ae3f06340098b86b1d2843aa234b4cfcae67']
 
 builddependencies = [
     ('Python','3.13.5'),
