@@ -1,0 +1,69 @@
+easyblock = 'MesonNinja'
+
+name = 'librsvg'
+version = '2.63.4'
+
+homepage = 'https://wiki.gnome.org/Projects/LibRsvg'
+description = "Librsvg is a library to render SVG files using cairo."
+
+toolchain = {'name': 'GCCcore', 'version': '14.3.0'}
+
+source_urls = ['https://download.gnome.org/sources/librsvg/%(version_major_minor)s/']
+sources = [SOURCE_TAR_XZ]
+checksums = ['31f07d9350dad3f8964fd613c31309ac160fdef13dfac59df6fd082de78d6e8f']
+
+builddependencies = [
+    ('binutils', '2.44'),
+    ('Rust', '1.96.0'),
+    ('cargo-c', '0.10.26'),
+    ('Ninja', '1.13.0'),
+    ('Meson', '1.8.2'),
+]
+
+dependencies = [
+    ('cairo', '1.18.4'),
+    ('freetype', '2.13.3'),
+    ('Gdk-Pixbuf', '2.42.12'),
+    ('HarfBuzz', '11.4.1'),
+    ('Pango', '1.57.0'),
+    ('GObject-Introspection', '1.84.0'),
+]
+
+# build both shared and static libraries; the GdkPixbuf loader is installed
+# into this installation prefix and registered via EB_GDK_PIXBUF_EXTRA_MODULE_FILES
+configopts = "-Ddefault_library=both "
+
+# rustc links via 'cc' by default, which bypasses the EasyBuild RPATH wrappers
+# (only gcc/g++/ld are wrapped), so Rust-linked binaries and libraries end up
+# without an RPATH section; force rustc to link via $CC (the wrapped gcc).
+#
+# If using a sysroot, Rust explicitly adds the sysroot lib path to the link
+# command, which gives the sysroot libraries priority over things in
+# LIBRARY_PATH. The -L flags force Rust to give higher priority to the
+# locations in LIBRARY_PATH (ensuring EasyBuild dependencies are preferred).
+# (LDFLAGS cannot be reused here, as the transitive link paths are not included there.)
+#
+# CARGO_HOME is redirected so that Cargo does not write to the home directory.
+local_rustenv = (
+    'export RUSTFLAGS="-C linker=$CC '
+    '$(printf -- \'-L %s \' $(echo $LIBRARY_PATH | tr \':\' \' \')) $RUSTFLAGS" && '
+    'export CARGO_HOME=%(builddir)s/.cargohome && '
+)
+prebuildopts = local_rustenv
+# Meson may re-invoke Cargo during 'ninja install'; keep the environment identical
+# so that Cargo does not rebuild and relink with different flags
+preinstallopts = local_rustenv
+
+modextrapaths = {
+    'EB_GDK_PIXBUF_EXTRA_MODULE_FILES': 'lib/gdk-pixbuf-2.0/2.10.0/loaders.cache',
+}
+
+sanity_check_paths = {
+    'files': ['bin/rsvg-convert', 'lib/librsvg-%(version_major)s.a', 'lib/librsvg-%%(version_major)s.%s' % SHLIB_EXT,
+              'lib/pkgconfig/librsvg-%(version_major)s.0.pc'],
+    'dirs': ['include/librsvg-%(version_major)s.0/librsvg', 'share'],
+}
+
+sanity_check_commands = ["rsvg-convert --help"]
+
+moduleclass = 'lib'
