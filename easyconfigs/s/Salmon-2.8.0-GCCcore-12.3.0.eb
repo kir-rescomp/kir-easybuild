@@ -1,0 +1,39 @@
+easyblock = 'Binary'
+
+name = 'Salmon'
+version = '2.8.0'
+
+homepage = 'https://github.com/COMBINE-lab/salmon'
+description = """Salmon is a wicked-fast program to produce a highly-accurate,
+ transcript-level quantification estimate from RNA-seq data."""
+
+toolchain = {'name': 'GCCcore', 'version': '12.3.0'}
+toolchainopts = {'pic': True}
+
+source_urls = ['https://github.com/COMBINE-lab/salmon/archive']
+sources = [{'download_filename': 'v%(version)s.tar.gz', 'filename': SOURCE_TAR_GZ}]
+checksums = ['298e6fe9980e4d60e4a4ca8f043d3446e6a1ed0777487331224151eb93ae7dd4']
+
+
+builddependencies = [
+    ('Rust', '1.96.0'),
+    ('CMake', '3.31.8','',SYSTEM),
+    ('binutils','2.40'),
+    ('OpenSSL','3','',SYSTEM),
+]
+
+extract_sources = True
+
+install_cmd = "cargo build --release && cargo install --root %(installdir)s --path crates/salmon-cli"
+
+#Disabling this for Salmon > 2*
+#runtest = 'test'
+
+sanity_check_paths = {
+    'files': ['bin/%(namelower)s'],
+    'dirs': [],
+}
+
+sanity_check_commands = ['%(namelower)s --help']
+
+moduleclass = 'bio'
