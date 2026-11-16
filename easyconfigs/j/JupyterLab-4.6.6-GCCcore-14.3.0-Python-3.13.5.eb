@@ -1,0 +1,119 @@
+easyblock = 'PythonBundle'
+
+name = 'JupyterLab'
+version = '4.6.6'
+
+homepage = 'https://jupyter.org/'
+description = """JupyterLab is the next-generation user interface for Project Jupyter offering all the
+ familiar building blocks of the classic Jupyter Notebook (notebook, terminal, text editor, file browser,
+ rich outputs, etc.) in a flexible and powerful user interface. Includes Poetry, PDM, KIR Jupyter
+ helpers, and GPU/resource monitoring (jupyterlab-nvdashboard, jupyter-resource-usage, nvitop)."""
+
+toolchain = {'name': 'GCCcore', 'version': '14.3.0'}
+
+builddependencies = [
+    ('binutils', '2.40', '', SYSTEM),
+]
+
+dependencies = [
+    ('Python', '3.13.5'),
+    ('nodejs', '22.17.1'),
+]
+
+exts_list = []
+use_pip = True
+
+local_venv = '%(installdir)s/venv'
+
+postinstallcmds = [
+    'python -m venv %s' % local_venv,
+
+    '%s/bin/pip install --no-cache-dir --upgrade pip setuptools wheel' % local_venv,
+
+    # Core Jupyter stack.
+    # notebook 7.6.3 is the Notebook release paired with JupyterLab 4.6.4 (both pin to the 4.6.x line).
+    '%s/bin/pip install --no-cache-dir ' % local_venv +
+        'jupyterlab==4.6.4 '
+        'notebook==7.6.3 '
+        'ipykernel '
+        'ipywidgets '
+        '"jsonschema>=4.18.0,<4.21.0" '    # quoted to prevent < being shell-redirected
+        'poetry==2.3.2 '
+        'pdm==2.26.6 '
+        'defopt==7.0.0 '
+        # GPU and resource monitoring
+        #   jupyterlab-nvdashboard : NVIDIA RAPIDS dashboards (GPU util, GPU memory, PCIe/NVLink) - requires Python >=3.11
+        #   jupyter-resource-usage : CPU and memory of the Jupyter server process tree in the status bar
+        #   nvitop                 : interactive GPU process viewer for the JupyterLab terminal
+        'jupyterlab-nvdashboard==0.15.0 '
+        'jupyter-resource-usage==1.2.1 '
+        'nvitop==1.7.0 '
+        'https://github.com/kir-rescomp/kir-jupyter-helper/archive/refs/tags/v0.3.0.tar.gz',
+
+    # Enable CPU tracking in jupyter-resource-usage (memory is tracked by default).
+    # Placed in the venv config directory so it applies to every user of this module.
+    'mkdir -p %s/etc/jupyter/jupyter_server_config.d' % local_venv,
+    """echo '{"ResourceUseDisplay": {"track_cpu_percent": true}}' """
+    """> %s/etc/jupyter/jupyter_server_config.d/kir_resource_usage.json""" % local_venv,
+
+    '%s/bin/python -m ipykernel install ' % local_venv +
+        '--prefix=%(installdir)s '
+        '--name="bmrc-jupyterlab" '
+        '--display-name="Python 3.11 (BMRC JupyterLab)"',
+]
+
+sanity_check_paths = {
+    'files': [
+        'venv/bin/jupyter-lab',
+        'venv/bin/jupyter-notebook',
+        'venv/bin/jupyter-nbconvert',
+        'venv/bin/jupyter-kernelspec',
+        'venv/bin/ipython',
+        'venv/bin/poetry',
+        'venv/bin/pdm',
+        'venv/bin/nvitop',
+        'venv/etc/jupyter/jupyter_server_config.d/kir_resource_usage.json',
+    ],
+    'dirs': [
+        'venv/lib/python%(pyshortver)s/site-packages/jupyterlab',
+        'venv/lib/python%(pyshortver)s/site-packages/notebook',
+        'venv/lib/python%(pyshortver)s/site-packages/IPython',
+        'venv/lib/python%(pyshortver)s/site-packages/jupyterlab_nvdashboard',
+        'venv/lib/python%(pyshortver)s/site-packages/jupyter_resource_usage',
+        'share/jupyter/kernels/bmrc-jupyterlab',
+    ],
+}
+
+# The nvdashboard checks only confirm registration, not NVML access, so they pass on
+# build hosts without an NVIDIA driver. `jupyter ... list` writes to stderr, hence 2>&1.
+sanity_check_commands = [
+    'jupyter lab --version | grep -q "^4.6.4$"',
+    'jupyter kernelspec list',
+    'jupyter labextension list 2>&1 | grep -qi nvdashboard',
+    'jupyter labextension list 2>&1 | grep -qi resource-usage',
+    'jupyter server extension list 2>&1 | grep -qi jupyterlab_nvdashboard',
+    'jupyter server extension list 2>&1 | grep -qi jupyter_resource_usage',
+    'poetry --version',
+    'pdm --version',
+]
+
+modextrapaths = {
+    'EB_ENV_JUPYTER_ROOT': '',
+    'PATH': 'venv/bin',
+    # PYTHONPATH intentionally omitted — the venv python already knows its own
+    # site-packages, and exporting it here contaminates every other Python
+    # process that loads this module (kernels, user venvs, etc.), which causes
+    # exactly the kind of package version conflicts seen with jsonschema.
+    'JUPYTER_PATH': 'venv/share/jupyter',
+}
+
+modextravars = {
+    'JUPYTERLAB_DIR':            '%(installdir)s/venv/share/jupyter/lab',
+    'JUPYTERLAB_SETTINGS_DIR':   '$HOME/.jupyter/lab/user-settings',
+    'JUPYTERLAB_WORKSPACES_DIR': '$HOME/.jupyter/lab/workspaces',
+    'VIRTUAL_ENV':               '%(installdir)s/venv',
+    'POETRY_VIRTUALENVS_CREATE': 'false',
+    'PDM_IN_ENV':                '1',
+}
+
+moduleclass = 'tools'
