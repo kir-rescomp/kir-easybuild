@@ -1,0 +1,27 @@
+easyblock = 'PythonPackage'
+
+name = 'python-isal'
+version = '1.9.1'
+
+homepage = 'https://github.com/pycompression/python-isal'
+description = """Faster zlib and gzip compatible compression and decompression
+ by providing python bindings for the isa-l library.
+"""
+
+toolchain = {'name': 'GCCcore', 'version': '14.3.0'}
+
+builddependencies = [('binutils', '2.44')]
+dependencies = [
+    ('Python', '3.13.5'),
+    ('ISA-L', '2.32.1'),
+]
+
+source_urls = [PYPI_SOURCE.replace('%(name)s', 'isal')]
+sources = ['isal-%s.tar.gz' % version]
+checksums = ['d210dca02a689ef2af709d2c62d2daac2e36b5d2fa06e6dc0d023c83fee77e91']
+
+preinstallopts = 'PYTHON_ISAL_LINK_DYNAMIC=true'
+
+options = {'modulename': 'isal'}
+
+moduleclass = 'lib'
