@@ -1,0 +1,119 @@
+easyblock = 'PythonBundle'
+
+name = 'bakta'
+version = '1.12.2'
+
+homepage = "https://github.com/oschwengers/bakta"
+description = """Bakta is a tool for the rapid & standardized annotation of bacterial genomes and plasmids
+ from both isolates and MAGs. It provides dbxref-rich, sORF-including and taxon-independent annotations
+ in machine-readable JSON & bioinformatics standard file formats for automated downstream analysis."""
+
+toolchain = {'name': 'gfbf', 'version': '2025b'}
+
+builddependencies = [
+    ('scikit-build-core', '0.11.5'),  # pyrodigal
+    ('Cython', '3.1.2'),              # pyrodigal
+]
+
+dependencies = [
+    ('Python', '3.13.5'),
+    ('SciPy-bundle', '2025.07'),  # numpy, pandas, python-dateutil, pyparsing, requests (via Python-bundle-PyPI)
+    ('Biopython', '1.86'),
+    ('PyYAML', '6.0.2'),
+    ('PyHMMER', '0.12.3','',('gompi','2025b')),        # bakta 1.12.2 requires pyhmmer >= 0.12.0
+    ('python-isal', '1.9.1'),
+    ('zlib-ng', '2.2.5'),         # C library; the Python zlib-ng extension below links against it
+    ('archspec', '0.2.7'),
+]
+
+exts_list = [
+    # --- alive-progress (3.3.0 pins about-time==4.2.1 and replaces grapheme with graphemeu) ---
+    ('about_time', '4.2.1', {
+        'source_tmpl': SOURCE_PY3_WHL,
+        'checksums': ['8bbf4c75fe13cbd3d72f49a03b02c5c7dca32169b6d49117c257e7eb3eaee341'],
+    }),
+    ('graphemeu', '0.7.2', {
+        'modulename': 'grapheme',
+        'source_tmpl': SOURCE_PY3_WHL,
+        'checksums': ['1444520f6899fd30114fc2a39f297d86d10fa0f23bf7579f772f8bc7efaa2542'],
+    }),
+    ('alive_progress', '3.3.0', {
+        'source_tmpl': SOURCE_PY3_WHL,
+        'checksums': ['63dd33bb94cde15ad9e5b666dbba8fedf71b72a4935d6fb9a92931e69402c9ff'],
+    }),
+    # --- matplotlib stack (compiled components installed from manylinux wheels) ---
+    ('cycler', '0.12.1', {
+        'checksums': ['88bb128f02ba341da8ef447245a9e138fae777f6a23943da4540077d3601eb1c'],
+    }),
+    ('kiwisolver', '1.5.1', {
+        'source_tmpl': '%(name)s-%(version)s-cp313-cp313-manylinux2014_x86_64.manylinux_2_17_x86_64.whl',
+        'checksums': ['74ad5c3dad54a4641b4c28cd15ded70899d04459c6c7aeacafea716be97cce6d'],
+    }),
+    ('contourpy', '1.4.0', {
+        'source_tmpl': '%(name)s-%(version)s-cp313-cp313-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl',
+        'checksums': ['f1219a8898523cba821085f2da8a1b962cc696325763f09d7f93538ba43b2d70'],
+    }),
+    ('fonttools', '4.69.1', {
+        'modulename': 'fontTools',
+        'source_tmpl': SOURCE_PY3_WHL,
+        'checksums': ['20e9dfac71694d9eeae48bb53c877bdf43b914794d69a769940728a1929cc835'],
+    }),
+    ('pillow', '13.0.0', {
+        'modulename': 'PIL',
+        'source_tmpl': '%(name)s-%(version)s-cp313-cp313-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl',
+        'checksums': ['5f56499c1a74d2b862beb0c33b8016f99d095858455df9d21583bbbc1c15b582'],
+    }),
+    ('matplotlib', '3.11.2', {
+        'source_tmpl': '%(name)s-%(version)s-cp313-cp313-manylinux2014_x86_64.manylinux_2_17_x86_64.whl',
+        'checksums': ['1944895967f87c84c9b4bad29a707b31f5b36df4a3a2339ea1f8ea3ce5105539'],
+    }),
+    ('pyCirclize', '1.10.1', {
+        'source_tmpl': SOURCELOWER_PY3_WHL,
+        'checksums': ['fc571b0223195b651edd22011963628bddd92861a4053526b31035bb3347f43e'],
+    }),
+    # --- gene prediction ---
+    ('pyrodigal', '3.7.1', {
+        'checksums': ['0262fc5b5fd0b16c18eb3eb9b6079e1590e6d838c3f8431c46d9027c8e67f600'],
+    }),
+    # --- xopen (2.1.0 additionally requires backports.zstd on Python < 3.14 and the Python zlib-ng package) ---
+    ('backports-zstd', '1.8.1', {
+        'modulename': 'backports.zstd',
+        'source_tmpl': 'backports_zstd-%(version)s.tar.gz',
+        'checksums': ['c8929bf0ce07c020bc330442fae266c8ef112cae269f85457e8cf857cab57200'],
+    }),
+    ('zlib-ng', '1.1.0', {
+        'modulename': 'zlib_ng',
+        'source_tmpl': 'zlib_ng-%(version)s.tar.gz',
+        'preinstallopts': 'PYTHON_ZLIB_NG_LINK_DYNAMIC=1 ',
+        'checksums': ['08a3a8468d4f130e3dc80d28ec42fcc7a878a57dfed616233e791066327d78a3'],
+    }),
+    ('xopen', '2.1.0', {
+        'source_tmpl': SOURCE_PY3_WHL,
+        'checksums': ['0d01d2183e7496594cbed022b1d89a0a7f4e03900da1b8d59047322a5140a66d'],
+    }),
+    (name, version, {
+        'source_tmpl': SOURCE_PY3_WHL,
+        'checksums': ['1b3725a3b4bc1c7c96f22c17db60fe65e142231010453376b836bf69f811cddf'],
+    }),
+]
+
+local_bins = ['bakta', 'bakta_db', 'bakta_io', 'bakta_plot', 'bakta_proteins']
+
+modextravars = {
+                 'BAKTA_DB':':/gpfs3/well/kir/projects/mirror/bakta/db-nov26-2026',            
+               }
+
+
+sanity_check_paths = {
+    'files': ['bin/%s' % bin for bin in local_bins],
+    'dirs': ['lib/python%(pyshortver)s/site-packages'],
+}
+
+sanity_check_commands = ['%s --help' % bin for bin in local_bins] + [
+    """python -c 'import matplotlib; matplotlib.use("Agg"); import matplotlib.pyplot' """,
+]
+
+# non-interactive plotting backend, as the bundled matplotlib has no Tk support
+modextravars = {'MPLBACKEND': 'Agg'}
+
+moduleclass = 'tools'
